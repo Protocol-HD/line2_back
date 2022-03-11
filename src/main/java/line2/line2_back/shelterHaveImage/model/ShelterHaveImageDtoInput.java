@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ShelterHaveImageDto {
+public class ShelterHaveImageDtoInput {
     private Long id;
     private Long imageId;
     private Long shelterId;

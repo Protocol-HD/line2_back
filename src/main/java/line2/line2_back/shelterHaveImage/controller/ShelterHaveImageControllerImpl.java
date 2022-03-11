@@ -1,7 +1,7 @@
 package line2.line2_back.shelterHaveImage.controller;
 
 import line2.line2_back.shelterHaveImage.model.ShelterHaveImage;
-import line2.line2_back.shelterHaveImage.model.ShelterHaveImageDto;
+import line2.line2_back.shelterHaveImage.model.ShelterHaveImageDtoInput;
 import line2.line2_back.shelterHaveImage.service.ShelterHaveImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +19,10 @@ public class ShelterHaveImageControllerImpl implements ShelterHaveImageControlle
 
     @Override
     @PostMapping("/addShelterHaveImage")
-    public ShelterHaveImage addShelterHaveImage(@RequestBody ShelterHaveImageDto shelterHaveImageDto) {
+    public ShelterHaveImage addShelterHaveImage(@RequestBody ShelterHaveImageDtoInput shelterHaveImageDtoInput) {
         try {
-            log.info("ShelterHaveImageController add shelterHaveImage({}) start", shelterHaveImageDto);
-            return shelterHaveImageService.saveShelterHaveImage(shelterHaveImageDto);
+            log.info("ShelterHaveImageController add shelterHaveImage({}) start", shelterHaveImageDtoInput);
+            return shelterHaveImageService.saveShelterHaveImage(shelterHaveImageDtoInput);
         } catch (Exception e) {
             log.error("ShelterHaveImageController add shelterHaveImage failure, error: {}", e.getMessage());
             return null;
@@ -33,10 +33,10 @@ public class ShelterHaveImageControllerImpl implements ShelterHaveImageControlle
 
     @Override
     @PutMapping("/editShelterHaveImage")
-    public ShelterHaveImage editShelterHaveImage(@RequestBody ShelterHaveImageDto shelterHaveImageDto) {
+    public ShelterHaveImage editShelterHaveImage(@RequestBody ShelterHaveImageDtoInput shelterHaveImageDtoInput) {
         try {
-            log.info("ShelterHaveImageController edit shelterHaveImage({}) start", shelterHaveImageDto);
-            return shelterHaveImageService.saveShelterHaveImage(shelterHaveImageDto);
+            log.info("ShelterHaveImageController edit shelterHaveImage({}) start", shelterHaveImageDtoInput);
+            return shelterHaveImageService.saveShelterHaveImage(shelterHaveImageDtoInput);
         } catch (Exception e) {
             log.error("ShelterHaveImageController edit shelterHaveImage failure, error: {}", e.getMessage());
             return null;

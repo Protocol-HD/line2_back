@@ -1,14 +1,14 @@
 package line2.line2_back.shelterHaveImage.controller;
 
 import line2.line2_back.shelterHaveImage.model.ShelterHaveImage;
-import line2.line2_back.shelterHaveImage.model.ShelterHaveImageDto;
+import line2.line2_back.shelterHaveImage.model.ShelterHaveImageDtoInput;
 
 import java.util.List;
 
 public interface ShelterHaveImageController {
-    ShelterHaveImage addShelterHaveImage(ShelterHaveImageDto shelterHaveImageDto);
+    ShelterHaveImage addShelterHaveImage(ShelterHaveImageDtoInput shelterHaveImageDtoInput);
 
-    ShelterHaveImage editShelterHaveImage(ShelterHaveImageDto shelterHaveImageDto);
+    ShelterHaveImage editShelterHaveImage(ShelterHaveImageDtoInput shelterHaveImageDtoInput);
 
     ShelterHaveImage findByIdShelterHaveImage(Long id);
 

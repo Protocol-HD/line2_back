@@ -1,10 +1,9 @@
 package line2.line2_back.shelterHaveImage.service;
 
 import line2.line2_back.image.repository.ImageRepository;
-import line2.line2_back.shelter.model.Shelter;
 import line2.line2_back.shelter.repository.ShelterRepository;
 import line2.line2_back.shelterHaveImage.model.ShelterHaveImage;
-import line2.line2_back.shelterHaveImage.model.ShelterHaveImageDto;
+import line2.line2_back.shelterHaveImage.model.ShelterHaveImageDtoInput;
 import line2.line2_back.shelterHaveImage.repository.ShelterHaveImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +20,13 @@ public class ShelterHaveImageServiceImpl implements ShelterHaveImageService {
     private final ShelterRepository shelterRepository;
 
     @Override
-    public ShelterHaveImage saveShelterHaveImage(ShelterHaveImageDto shelterHaveImageDto) {
+    public ShelterHaveImage saveShelterHaveImage(ShelterHaveImageDtoInput shelterHaveImageDtoInput) {
         try {
-            log.info("ShelterHaveImageService save shelterHaveImage({}) start", shelterHaveImageDto);
+            log.info("ShelterHaveImageService save shelterHaveImage({}) start", shelterHaveImageDtoInput);
             return shelterHaveImageRepository.save(ShelterHaveImage.builder()
-                    .id(shelterHaveImageDto.getId())
-                    .image(imageRepository.findById(shelterHaveImageDto.getImageId()).get())
-                    .shelter(shelterRepository.findById(shelterHaveImageDto.getShelterId()).get())
+                    .id(shelterHaveImageDtoInput.getId())
+                    .image(imageRepository.findById(shelterHaveImageDtoInput.getImageId()).get())
+                    .shelter(shelterRepository.findById(shelterHaveImageDtoInput.getShelterId()).get())
                     .build());
         } catch (Exception e) {
             log.error("ShelterHaveImageService save shelterHaveImage failure, error: {}", e.getMessage());

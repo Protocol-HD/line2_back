@@ -58,7 +58,7 @@ public class ImageControllerImpl implements ImageController {
     }
 
     @Override
-    @GetMapping("/findAllImage")
+    @GetMapping("/findAllImages")
     public List<Image> findAllImages() {
         try {
             log.info("ImageController find all images start");

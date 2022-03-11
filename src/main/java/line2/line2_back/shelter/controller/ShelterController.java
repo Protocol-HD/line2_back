@@ -1,13 +1,14 @@
 package line2.line2_back.shelter.controller;
 
 import line2.line2_back.shelter.model.Shelter;
+import line2.line2_back.shelter.model.ShelterDtoInput;
 
 import java.util.List;
 
 public interface ShelterController {
-    Shelter addShelter(Shelter shelter);
+    Shelter addShelter(ShelterDtoInput shelterDtoInput);
 
-    Shelter editShelter(Shelter shelter);
+    Shelter editShelter(ShelterDtoInput shelterDtoInput);
 
     Shelter findByIdShelter(Long id);
 

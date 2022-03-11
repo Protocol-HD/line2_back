@@ -1,7 +1,9 @@
 package line2.line2_back.shelter.service;
 
 import line2.line2_back.shelter.model.Shelter;
+import line2.line2_back.shelter.model.ShelterDtoInput;
 import line2.line2_back.shelter.repository.ShelterRepository;
+import line2.line2_back.shelterFacility.repository.ShelterFacilityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,12 +15,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShelterServiceImpl implements ShelterService {
     private final ShelterRepository shelterRepository;
+    private final ShelterFacilityRepository shelterFacilityRepository;
 
     @Override
-    public Shelter saveShelter(Shelter shelter) {
+    public Shelter saveShelter(ShelterDtoInput shelterDtoInput) {
         try {
-            log.info("ShelterService save shelter({}) start", shelter);
-            return shelterRepository.save(shelter);
+            log.info("ShelterService save shelter({}) start", shelterDtoInput);
+            return shelterRepository.save(Shelter.builder()
+                            .id(shelterDtoInput.getId())
+                            .shelterName(shelterDtoInput.getShelterName())
+                            .shelterAddress(shelterDtoInput.getShelterAddress())
+                            .coordinateX(shelterDtoInput.getCoordinateX())
+                            .coordinateY(shelterDtoInput.getCoordinateY())
+                            .shelterFacility(shelterFacilityRepository.findById(shelterDtoInput.getShelterFacilityId()).get())
+                    .build());
         } catch (Exception e) {
             log.error("ShelterService save shelter failure, error: {}", e.getMessage());
             return null;

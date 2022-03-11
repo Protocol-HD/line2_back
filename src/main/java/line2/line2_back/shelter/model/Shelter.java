@@ -1,11 +1,9 @@
 package line2.line2_back.shelter.model;
 
+import line2.line2_back.shelterFacility.model.ShelterFacility;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -22,4 +20,7 @@ public class Shelter {
     private String shelterAddress;
     private double coordinateX;
     private double coordinateY;
+    @ManyToOne
+    @JoinColumn(name = "shelter_facility_id")
+    private ShelterFacility shelterFacility;
 }

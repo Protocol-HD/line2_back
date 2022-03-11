@@ -1,7 +1,6 @@
 package line2.line2_back.shelterHaveImage.model;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter

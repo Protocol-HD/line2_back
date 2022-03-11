@@ -1,6 +1,7 @@
 package line2.line2_back.shelter.controller;
 
 import line2.line2_back.shelter.model.Shelter;
+import line2.line2_back.shelter.model.ShelterDtoInput;
 import line2.line2_back.shelter.service.ShelterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,10 +19,10 @@ public class ShelterControllerImpl implements ShelterController{
 
     @Override
     @PostMapping("/addShelter")
-    public Shelter addShelter(@RequestBody Shelter shelter) {
+    public Shelter addShelter(@RequestBody ShelterDtoInput shelterDtoInput) {
         try {
-            log.info("ShelterController add shelter({}) start", shelter);
-            return shelterService.saveShelter(shelter);
+            log.info("ShelterController add shelter({}) start", shelterDtoInput);
+            return shelterService.saveShelter(shelterDtoInput);
         } catch (Exception e) {
             log.error("ShelterController add shelter failure, error: {}", e.getMessage());
             return null;
@@ -32,10 +33,10 @@ public class ShelterControllerImpl implements ShelterController{
 
     @Override
     @PutMapping("/editShelter")
-    public Shelter editShelter(@RequestBody Shelter shelter) {
+    public Shelter editShelter(@RequestBody ShelterDtoInput shelterDtoInput) {
         try {
-            log.info("ShelterController edit shelter({}) start", shelter);
-            return shelterService.saveShelter(shelter);
+            log.info("ShelterController edit shelter({}) start", shelterDtoInput);
+            return shelterService.saveShelter(shelterDtoInput);
         } catch (Exception e) {
             log.error("ShelterController edit shelter failure, error: {}", e.getMessage());
             return null;

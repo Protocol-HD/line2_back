@@ -12,7 +12,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
-    private static ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
 
     @Override
     public Image saveImage(Image image) {

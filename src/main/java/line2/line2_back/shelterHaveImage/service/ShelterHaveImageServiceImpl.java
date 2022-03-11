@@ -26,8 +26,8 @@ public class ShelterHaveImageServiceImpl implements ShelterHaveImageService {
             log.info("ShelterHaveImageService save shelterHaveImage({}) start", shelterHaveImageDto);
             return shelterHaveImageRepository.save(ShelterHaveImage.builder()
                     .id(shelterHaveImageDto.getId())
-                    .image(imageRepository.getById(shelterHaveImageDto.getImageId()))
-                    .shelter(shelterRepository.getById(shelterHaveImageDto.getShelterId()))
+                    .image(imageRepository.findById(shelterHaveImageDto.getImageId()).get())
+                    .shelter(shelterRepository.findById(shelterHaveImageDto.getShelterId()).get())
                     .build());
         } catch (Exception e) {
             log.error("ShelterHaveImageService save shelterHaveImage failure, error: {}", e.getMessage());

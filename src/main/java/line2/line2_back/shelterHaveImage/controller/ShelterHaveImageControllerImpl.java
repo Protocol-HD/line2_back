@@ -2,6 +2,7 @@ package line2.line2_back.shelterHaveImage.controller;
 
 import line2.line2_back.shelterHaveImage.model.ShelterHaveImage;
 import line2.line2_back.shelterHaveImage.model.ShelterHaveImageDtoInput;
+import line2.line2_back.shelterHaveImage.model.ShelterHaveImageDtoOutput;
 import line2.line2_back.shelterHaveImage.service.ShelterHaveImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +48,7 @@ public class ShelterHaveImageControllerImpl implements ShelterHaveImageControlle
 
     @Override
     @GetMapping("/findShelterHaveImage/{id}")
-    public ShelterHaveImage findByIdShelterHaveImage(@PathVariable Long id) {
+    public ShelterHaveImageDtoOutput findByIdShelterHaveImage(@PathVariable Long id) {
         try {
             log.info("ShelterHaveImageController find by id shelterHaveImage(id: {}) start", id);
             return shelterHaveImageService.findByIdShelterHaveImage(id);

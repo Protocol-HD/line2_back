@@ -4,6 +4,7 @@ import line2.line2_back.image.repository.ImageRepository;
 import line2.line2_back.shelter.repository.ShelterRepository;
 import line2.line2_back.shelterHaveImage.model.ShelterHaveImage;
 import line2.line2_back.shelterHaveImage.model.ShelterHaveImageDtoInput;
+import line2.line2_back.shelterHaveImage.model.ShelterHaveImageDtoOutput;
 import line2.line2_back.shelterHaveImage.repository.ShelterHaveImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,10 +38,12 @@ public class ShelterHaveImageServiceImpl implements ShelterHaveImageService {
     }
 
     @Override
-    public ShelterHaveImage findByIdShelterHaveImage(Long id) {
+    public ShelterHaveImageDtoOutput findByIdShelterHaveImage(Long id) {
         try {
             log.info("ShelterHaveImageService find by id shelterHaveImage(id: {}) start", id);
-            return shelterHaveImageRepository.findById(id).get();
+            return ShelterHaveImageDtoOutput.builder()
+                    .imageName(shelterHaveImageRepository.findById(id).get().getImage().getImageName())
+                    .build();
         } catch (Exception e) {
             log.error("ShelterHaveImageService find by id shelterHaveImage failure, error: {}", e.getMessage());
             return null;

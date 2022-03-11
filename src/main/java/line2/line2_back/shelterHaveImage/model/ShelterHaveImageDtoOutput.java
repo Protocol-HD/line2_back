@@ -1,13 +1,14 @@
 package line2.line2_back.shelterHaveImage.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@Setter
+@Builder
 @ToString
-public class ShelterHaveImageDtoInput {
-    private Long id;
-    private Long imageId;
-    private Long shelterId;
+public class ShelterHaveImageDtoOutput {
+    private String imageName;
 }

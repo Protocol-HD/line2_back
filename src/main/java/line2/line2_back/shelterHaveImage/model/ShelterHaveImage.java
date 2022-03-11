@@ -1,4 +1,4 @@
-package line2.line2_back.shelterImage.model;
+package line2.line2_back.shelterHaveImage.model;
 
 import line2.line2_back.image.model.Image;
 import line2.line2_back.shelter.model.Shelter;
@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ShelterImage {
+public class ShelterHaveImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

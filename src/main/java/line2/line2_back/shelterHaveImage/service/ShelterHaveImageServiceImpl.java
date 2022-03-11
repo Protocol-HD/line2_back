@@ -84,4 +84,24 @@ public class ShelterHaveImageServiceImpl implements ShelterHaveImageService {
             log.info("ShelterHaveImageService delete by id shelterHaveImage end");
         }
     }
+
+    @Override
+    public List<ShelterHaveImageDtoOutput> findByShelterId(Long id) {
+        try {
+            log.info("ShelterHaveImageService find by shelter id shelterHaveImages(id: {}) start", id);
+            List<ShelterHaveImageDtoOutput> shelterHaveImages = new ArrayList<>();
+            log.info("ShelterHaveImageService modify DtoOutput");
+            shelterHaveImageRepository.findByShelterId(id).forEach(shelterHaveImage -> {
+                shelterHaveImages.add(ShelterHaveImageDtoOutput.builder()
+                        .imageName(shelterHaveImage.getImage().getImageName())
+                        .build());
+            });
+            return shelterHaveImages;
+        } catch (Exception e) {
+            log.error("ShelterHaveImageService find shelter id shelterHaveImages failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("ShelterHaveImageService find shelter id shelterHaveImages end");
+        }
+    }
 }

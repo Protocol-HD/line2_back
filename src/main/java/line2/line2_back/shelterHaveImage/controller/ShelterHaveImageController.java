@@ -16,4 +16,6 @@ public interface ShelterHaveImageController {
     List<ShelterHaveImageDtoOutput> findAllShelterHaveImages();
 
     void deleteByIdShelterHaveImage(Long id);
+
+    List<ShelterHaveImageDtoOutput> findByShelterId(Long id);
 }

@@ -86,4 +86,18 @@ public class ShelterHaveImageControllerImpl implements ShelterHaveImageControlle
             log.info("ShelterHaveImageController delete by id shelterHaveImage end");
         }
     }
+
+    @Override
+    @GetMapping("/findByShelterIdShelterHaveImages/{id}")
+    public List<ShelterHaveImageDtoOutput> findByShelterId(@PathVariable Long id) {
+        try {
+            log.info("ShelterHaveImageController find by shelter id shelterHaveImages(id: {}) start", id);
+            return shelterHaveImageService.findByShelterId(id);
+        } catch (Exception e) {
+            log.error("ShelterHaveImageController find by shelter id shelterHaveImages failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("ShelterHaveImageController find by shelter id shelterHaveImages end");
+        }
+    }
 }

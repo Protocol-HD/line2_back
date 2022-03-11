@@ -1,5 +1,6 @@
 package line2.line2_back.shelter.model;
 
+import line2.line2_back.shelterCategory.model.ShelterCategory;
 import line2.line2_back.shelterFacility.model.ShelterFacility;
 import lombok.*;
 
@@ -21,6 +22,6 @@ public class Shelter {
     private double coordinateX;
     private double coordinateY;
     @ManyToOne
-    @JoinColumn(name = "shelter_facility_id")
-    private ShelterFacility shelterFacility;
+    @JoinColumn(name = "shelter_category_id")
+    private ShelterCategory shelterCategory;
 }

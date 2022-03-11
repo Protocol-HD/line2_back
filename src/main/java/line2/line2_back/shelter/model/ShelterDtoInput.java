@@ -13,5 +13,5 @@ public class ShelterDtoInput {
     private String shelterAddress;
     private double coordinateX;
     private double coordinateY;
-    private Long shelterFacilityId;
+    private Long shelterCategoryId;
 }

@@ -12,6 +12,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@CrossOrigin
 public class ShelterCategoryControllerImpl implements ShelterCategoryController {
     private final ShelterCategoryService shelterCategoryService;
 

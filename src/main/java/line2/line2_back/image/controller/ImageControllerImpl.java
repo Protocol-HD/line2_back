@@ -12,6 +12,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@CrossOrigin
 public class ImageControllerImpl implements ImageController {
     private final ImageService imageService;
 

@@ -4,8 +4,7 @@ import line2.line2_back.image.model.Image;
 import line2.line2_back.image.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,7 +16,8 @@ public class ImageControllerImpl implements ImageController {
     private static ImageService imageservice;
 
     @Override
-    public Image addImage(Image image) {
+    @PostMapping("/addImage")
+    public Image addImage(@RequestBody Image image) {
         try {
             log.info("ImageController add image({}) start", image);
             return imageservice.saveImage(image);
@@ -30,7 +30,8 @@ public class ImageControllerImpl implements ImageController {
     }
 
     @Override
-    public Image editImage(Image image) {
+    @PutMapping("/editImage")
+    public Image editImage(@RequestBody Image image) {
         try {
             log.info("ImageController edit image({}) start", image);
             return imageservice.saveImage(image);
@@ -43,7 +44,8 @@ public class ImageControllerImpl implements ImageController {
     }
 
     @Override
-    public Image findByIdImage(Long id) {
+    @GetMapping("/findImage/{}")
+    public Image findByIdImage(@PathVariable Long id) {
         try {
             log.info("ImageController find by id image(id: {}) start", id);
             return imageservice.findByIdImage(id);
@@ -56,6 +58,7 @@ public class ImageControllerImpl implements ImageController {
     }
 
     @Override
+    @GetMapping("/findAllImage")
     public List<Image> findAllImages() {
         try {
             log.info("ImageController find all images start");
@@ -69,7 +72,8 @@ public class ImageControllerImpl implements ImageController {
     }
 
     @Override
-    public void deleteByIdImage(Long id) {
+    @DeleteMapping("/deleteImage/{}")
+    public void deleteByIdImage(@PathVariable Long id) {
         try {
             log.info("ImageController delete by id image(id: {}) start", id);
             imageservice.deleteByIdImage(id);

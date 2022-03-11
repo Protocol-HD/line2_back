@@ -13,7 +13,7 @@ public interface ShelterHaveImageController {
 
     ShelterHaveImageDtoOutput findByIdShelterHaveImage(Long id);
 
-    List<ShelterHaveImage> findAllShelterHaveImages();
+    List<ShelterHaveImageDtoOutput> findAllShelterHaveImages();
 
     void deleteByIdShelterHaveImage(Long id);
 }

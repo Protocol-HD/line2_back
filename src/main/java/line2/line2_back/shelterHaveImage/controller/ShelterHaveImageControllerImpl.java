@@ -62,7 +62,7 @@ public class ShelterHaveImageControllerImpl implements ShelterHaveImageControlle
 
     @Override
     @GetMapping("/findAllShelterHaveImages")
-    public List<ShelterHaveImage> findAllShelterHaveImages() {
+    public List<ShelterHaveImageDtoOutput> findAllShelterHaveImages() {
         try {
             log.info("ShelterHaveImageController find all shelterHaveImages start");
             return shelterHaveImageService.findAllShelterHaveImages();

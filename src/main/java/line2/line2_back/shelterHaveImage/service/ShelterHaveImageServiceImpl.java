@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,10 +54,17 @@ public class ShelterHaveImageServiceImpl implements ShelterHaveImageService {
     }
 
     @Override
-    public List<ShelterHaveImage> findAllShelterHaveImages() {
+    public List<ShelterHaveImageDtoOutput> findAllShelterHaveImages() {
         try {
             log.info("ShelterHaveImageService find all shelterHaveImages start");
-            return shelterHaveImageRepository.findAll();
+            List<ShelterHaveImageDtoOutput> shelterHaveImages = new ArrayList<>();
+            log.info("ShelterHaveImageService modify DtoOutput");
+            shelterHaveImageRepository.findAll().forEach(shelterHaveImage -> {
+                shelterHaveImages.add(ShelterHaveImageDtoOutput.builder()
+                        .imageName(shelterHaveImage.getImage().getImageName())
+                        .build());
+            });
+            return shelterHaveImages;
         } catch (Exception e) {
             log.error("ShelterHaveImageService find all shelterHaveImages failure, error: {}", e.getMessage());
             return null;

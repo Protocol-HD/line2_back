@@ -59,7 +59,7 @@ public class ShelterControllerImpl implements ShelterController{
     }
 
     @Override
-    @GetMapping("/findAllShelter")
+    @GetMapping("/findAllShelters")
     public List<Shelter> findAllShelter() {
         try {
             log.info("ShelterController find all shelters start");

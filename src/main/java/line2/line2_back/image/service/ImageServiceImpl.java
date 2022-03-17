@@ -17,51 +17,51 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Image saveImage(Image image) {
         try {
-            log.info("ImageService save image({}) start", image);
+            log.info("ImageService save Image({}) start", image);
             return imageRepository.save(image);
         } catch (Exception e) {
-            log.error("ImageService save image failure, error: {}", e.getMessage());
+            log.error("ImageService save Image failure, error: {}", e.getMessage());
             return null;
         } finally {
-            log.info("ImageService save image end");
+            log.info("ImageService save Image end");
         }
     }
 
     @Override
     public Image findByIdImage(Long id) {
         try {
-            log.info("ImageService find by id image(id: {}) start", id);
+            log.info("ImageService find by id Image(id: {}) start", id);
             return imageRepository.findById(id).get();
         } catch (Exception e) {
-            log.error("ImageService find by id image failure, error: {}", e.getMessage());
+            log.error("ImageService find by id Image failure, error: {}", e.getMessage());
             return null;
         } finally {
-            log.info("ImageService find by id image end");
+            log.info("ImageService find by id Image end");
         }
     }
 
     @Override
     public List<Image> findAllImages() {
         try {
-            log.info("ImageService find all images start");
+            log.info("ImageService find all Images start");
             return imageRepository.findAll();
         } catch (Exception e) {
-            log.error("ImageService find all images failure, error: {}", e.getMessage());
+            log.error("ImageService find all Images failure, error: {}", e.getMessage());
             return null;
         } finally {
-            log.info("ImageService find all images end");
+            log.info("ImageService find all Images end");
         }
     }
 
     @Override
     public void deleteByIdImage(Long id) {
         try {
-            log.info("ImageService delete by id image(id: {}) start", id);
+            log.info("ImageService delete by id Image(id: {}) start", id);
             imageRepository.deleteById(id);
         } catch (Exception e) {
-            log.error("ImageService delete by id image failure, error: {}", e.getMessage());
+            log.error("ImageService delete by id Image failure, error: {}", e.getMessage());
         } finally {
-            log.info("ImageService delete by id image end");
+            log.info("ImageService delete by id Image end");
         }
     }
 }

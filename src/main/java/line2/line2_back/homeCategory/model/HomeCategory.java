@@ -1,4 +1,4 @@
-package line2.line2_back.shelterCategory.model;
+package line2.line2_back.homeCategory.model;
 
 import lombok.*;
 
@@ -14,9 +14,9 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ShelterCategory {
+public class HomeCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String shelterCategoryName;
+    private String homeCategoryName;
 }

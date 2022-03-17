@@ -43,13 +43,13 @@ public class HomePolicyTableServiceImpl implements HomePolicyTableService{
     @Override
     public List<HomePolicyTable> findByHomeId(Long id) {
         try {
-            log.info("HomePolicyTableService delete by home id HomePolicyTable(id: {}) start", id);
+            log.info("HomePolicyTableService find by home id HomePolicyTable(id: {}) start", id);
             return homePolicyTableRepository.findByHomeId(id);
         } catch (Exception e) {
-            log.error("HomePolicyTableService delete by home id HomePolicyTable failure, error: {}", e.getMessage());
+            log.error("HomePolicyTableService find by home id HomePolicyTable failure, error: {}", e.getMessage());
             return null;
         } finally {
-            log.info("HomePolicyTableService delete by home id HomePolicyTable end");
+            log.info("HomePolicyTableService find by home id HomePolicyTable end");
         }
     }
 }

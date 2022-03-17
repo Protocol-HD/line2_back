@@ -18,10 +18,10 @@ public class ImageControllerImpl implements ImageController {
 
     @Override
     @PostMapping("/v1/image/add")
-    public Image addImage(@RequestBody Image image) {
+    public Image add(@RequestBody Image image) {
         try {
             log.info("ImageController add Image({}) start", image);
-            return imageService.saveImage(image);
+            return imageService.save(image);
         } catch (Exception e) {
             log.error("ImageController add Image failure, error: {}", e.getMessage());
             return null;
@@ -32,10 +32,10 @@ public class ImageControllerImpl implements ImageController {
 
     @Override
     @PutMapping("/v1/image/edit")
-    public Image editImage(@RequestBody Image image) {
+    public Image edit(@RequestBody Image image) {
         try {
             log.info("ImageController edit Image({}) start", image);
-            return imageService.saveImage(image);
+            return imageService.save(image);
         } catch (Exception e) {
             log.error("ImageController edit Image failure, error: {}", e.getMessage());
             return null;
@@ -46,10 +46,10 @@ public class ImageControllerImpl implements ImageController {
 
     @Override
     @GetMapping("/v1/image/get/{id}")
-    public Image findByIdImage(@PathVariable Long id) {
+    public Image findById(@PathVariable Long id) {
         try {
             log.info("ImageController find by id Image(id: {}) start", id);
-            return imageService.findByIdImage(id);
+            return imageService.findById(id);
         } catch (Exception e) {
             log.error("ImageController find by id Image failure, error: {}", e.getMessage());
             return null;
@@ -60,10 +60,10 @@ public class ImageControllerImpl implements ImageController {
 
     @Override
     @GetMapping("/v1/image/get_list")
-    public List<Image> findAllImages() {
+    public List<Image> findAll() {
         try {
             log.info("ImageController find all Images start");
-            return imageService.findAllImages();
+            return imageService.findAll();
         } catch (Exception e) {
             log.error("ImageController find all Images failure, error: {}", e.getMessage());
             return null;
@@ -74,10 +74,10 @@ public class ImageControllerImpl implements ImageController {
 
     @Override
     @DeleteMapping("/v1/image/delete/{id}")
-    public void deleteByIdImage(@PathVariable Long id) {
+    public void deleteById(@PathVariable Long id) {
         try {
             log.info("ImageController delete by id Image(id: {}) start", id);
-            imageService.deleteByIdImage(id);
+            imageService.deleteById(id);
         } catch (Exception e) {
             log.error("ImageController delete by id Image failure, error: {}", e.getMessage());
         } finally {

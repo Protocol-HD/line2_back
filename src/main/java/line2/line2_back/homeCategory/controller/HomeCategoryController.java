@@ -5,7 +5,7 @@ import line2.line2_back.homeCategory.model.HomeCategory;
 import java.util.List;
 
 public interface HomeCategoryController {
-    HomeCategory findByIdHomeCategory(Long id);
+    HomeCategory findById(Long id);
 
-    List<HomeCategory> findAllHomeCategory();
+    List<HomeCategory> findAll();
 }

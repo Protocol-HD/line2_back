@@ -15,7 +15,7 @@ public class HomeCategoryServiceImpl implements HomeCategoryService{
     private final HomeCategoryRepository homeCategoryRepository;
 
     @Override
-    public HomeCategory findByIdHomeCategory(Long id) {
+    public HomeCategory findById(Long id) {
         try {
             log.info("HomeCategoryService find by id HomeCategory(id: {}) start", id);
             return homeCategoryRepository.findById(id).get();
@@ -28,7 +28,7 @@ public class HomeCategoryServiceImpl implements HomeCategoryService{
     }
 
     @Override
-    public List<HomeCategory> findAllHomeCategory() {
+    public List<HomeCategory> findAll() {
         try {
             log.info("HomeCategoryService find all HomeCategories start");
             return homeCategoryRepository.findAll();

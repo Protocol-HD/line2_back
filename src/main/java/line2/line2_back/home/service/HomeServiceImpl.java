@@ -15,7 +15,7 @@ public class HomeServiceImpl implements HomeService{
     private final HomeRepository homeRepository;
 
     @Override
-    public Home saveHome(Home home) {
+    public Home save(Home home) {
         try {
             log.info("HomeService save Home({}) start", home);
             return homeRepository.save(home);
@@ -28,9 +28,9 @@ public class HomeServiceImpl implements HomeService{
     }
 
     @Override
-    public Home findByIdHome(Long id) {
+    public Home findById(Long id) {
         try {
-            log.info("HomeService find by id Home({}) start", id);
+            log.info("HomeService find by id Home(id: {}) start", id);
             return homeRepository.findById(id).get();
         } catch (Exception e) {
             log.error("HomeService find by id Home failure, error: {}", e.getMessage());
@@ -41,7 +41,7 @@ public class HomeServiceImpl implements HomeService{
     }
 
     @Override
-    public List<Home> findAllHome() {
+    public List<Home> findAll() {
         try {
             log.info("HomeService find all Homes start");
             return homeRepository.findAll();
@@ -54,9 +54,9 @@ public class HomeServiceImpl implements HomeService{
     }
 
     @Override
-    public void deleteByIdHome(Long id) {
+    public void deleteById(Long id) {
         try {
-            log.info("HomeService delete by id Home({}) start", id);
+            log.info("HomeService delete by id Home(id: {}) start", id);
             homeRepository.deleteById(id);
         } catch (Exception e) {
             log.error("HomeService delete by id Home failure, error: {}", e.getMessage());

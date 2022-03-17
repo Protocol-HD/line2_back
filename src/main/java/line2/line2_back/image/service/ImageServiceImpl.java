@@ -15,7 +15,7 @@ public class ImageServiceImpl implements ImageService {
     private final ImageRepository imageRepository;
 
     @Override
-    public Image saveImage(Image image) {
+    public Image save(Image image) {
         try {
             log.info("ImageService save Image({}) start", image);
             return imageRepository.save(image);
@@ -28,7 +28,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image findByIdImage(Long id) {
+    public Image findById(Long id) {
         try {
             log.info("ImageService find by id Image(id: {}) start", id);
             return imageRepository.findById(id).get();
@@ -41,7 +41,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<Image> findAllImages() {
+    public List<Image> findAll() {
         try {
             log.info("ImageService find all Images start");
             return imageRepository.findAll();
@@ -54,7 +54,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void deleteByIdImage(Long id) {
+    public void deleteById(Long id) {
         try {
             log.info("ImageService delete by id Image(id: {}) start", id);
             imageRepository.deleteById(id);

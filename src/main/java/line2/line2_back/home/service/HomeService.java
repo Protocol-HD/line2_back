@@ -5,11 +5,11 @@ import line2.line2_back.home.model.Home;
 import java.util.List;
 
 public interface HomeService {
-    Home saveHome(Home home);
+    Home save(Home home);
 
-    Home findByIdHome(Long id);
+    Home findById(Long id);
 
-    List<Home> findAllHome();
+    List<Home> findAll();
 
-    void deleteByIdHome(Long id);
+    void deleteById(Long id);
 }

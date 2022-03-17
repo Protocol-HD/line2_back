@@ -5,7 +5,7 @@ import line2.line2_back.homeFacility.model.HomeFacility;
 import java.util.List;
 
 public interface HomeFacilityController {
-    HomeFacility findByIdHomeFacility(Long id);
+    HomeFacility findById(Long id);
 
-    List<HomeFacility> findAllHomeFacility();
+    List<HomeFacility> findAll();
 }

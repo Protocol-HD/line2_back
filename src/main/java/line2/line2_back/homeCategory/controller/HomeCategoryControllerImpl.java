@@ -18,10 +18,10 @@ public class HomeCategoryControllerImpl implements HomeCategoryController{
 
     @Override
     @GetMapping("/v1/home_category/get/{id}")
-    public HomeCategory findByIdHomeCategory(@PathVariable Long id) {
+    public HomeCategory findById(@PathVariable Long id) {
         try {
             log.info("HomeCategoryController find by id HomeCategory(id: {}) start", id);
-            return homeCategoryService.findByIdHomeCategory(id);
+            return homeCategoryService.findById(id);
         } catch (Exception e) {
             log.error("HomeCategoryController find by id HomeCategory failure, error: {}", e.getMessage());
             return null;
@@ -32,10 +32,10 @@ public class HomeCategoryControllerImpl implements HomeCategoryController{
 
     @Override
     @GetMapping("/v1/home_category/get_list")
-    public List<HomeCategory> findAllHomeCategory() {
+    public List<HomeCategory> findAll() {
         try {
             log.info("HomeCategoryController find all HomeCategories start");
-            return homeCategoryService.findAllHomeCategory();
+            return homeCategoryService.findAll();
         } catch (Exception e) {
             log.error("HomeCategoryController find all HomeCategories failure, error: {}", e.getMessage());
             return null;

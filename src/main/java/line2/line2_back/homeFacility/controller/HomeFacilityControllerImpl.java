@@ -18,10 +18,10 @@ public class HomeFacilityControllerImpl implements HomeFacilityController{
 
     @Override
     @GetMapping("/v1/home_facility/get/{id}")
-    public HomeFacility findByIdHomeFacility(@PathVariable Long id) {
+    public HomeFacility findById(@PathVariable Long id) {
         try {
             log.info("HomeFacilityController find by id HomeFacility(id: {}) start", id);
-            return homeFacilityService.findByIdHomeFacility(id);
+            return homeFacilityService.findById(id);
         } catch (Exception e) {
             log.error("HomeFacilityController find by id HomeFacility failure, error: {}", e.getMessage());
             return null;
@@ -32,10 +32,10 @@ public class HomeFacilityControllerImpl implements HomeFacilityController{
 
     @Override
     @GetMapping("/v1/home_facility/get_list")
-    public List<HomeFacility> findAllHomeFacility() {
+    public List<HomeFacility> findAll() {
         try {
             log.info("HomeFacilityController find all HomeFacilities start");
-            return homeFacilityService.findAllHomeFacility();
+            return homeFacilityService.findAll();
         } catch (Exception e) {
             log.error("HomeFacilityController find all HomeFacilities failure, error: {}", e.getMessage());
             return null;

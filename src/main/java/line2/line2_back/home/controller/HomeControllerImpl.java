@@ -18,10 +18,10 @@ public class HomeControllerImpl implements HomeController{
 
     @Override
     @PostMapping("/v1/home/add")
-    public Home addHome(@RequestBody Home home) {
+    public Home add(@RequestBody Home home) {
         try {
             log.info("HomeController add Home({}) start", home);
-            return homeService.saveHome(home);
+            return homeService.save(home);
         } catch (Exception e) {
             log.error("HomeController add Home failure, error: {}", e.getMessage());
             return null;
@@ -31,11 +31,11 @@ public class HomeControllerImpl implements HomeController{
     }
 
     @Override
-    @PostMapping("/v1/home/edit")
-    public Home editHome(@RequestBody Home home) {
+    @PutMapping("/v1/home/edit")
+    public Home edit(@RequestBody Home home) {
         try {
-            log.info("HomeController edit Home({}) start", home);
-            return homeService.saveHome(home);
+            log.info("HomeController edit Home(id: {}) start", home);
+            return homeService.save(home);
         } catch (Exception e) {
             log.error("HomeController edit Home failure, error: {}", e.getMessage());
             return null;
@@ -46,10 +46,10 @@ public class HomeControllerImpl implements HomeController{
 
     @Override
     @GetMapping("/v1/home/get/{id}")
-    public Home findByIdHome(@PathVariable Long id) {
+    public Home findById(@PathVariable Long id) {
         try {
-            log.info("HomeController find by id Home({}) start", id);
-            return homeService.findByIdHome(id);
+            log.info("HomeController find by id Home(id: {}) start", id);
+            return homeService.findById(id);
         } catch (Exception e) {
             log.error("HomeController find by id Home failure, error: {}", e.getMessage());
             return null;
@@ -60,10 +60,10 @@ public class HomeControllerImpl implements HomeController{
 
     @Override
     @GetMapping("/v1/home/get_list")
-    public List<Home> findAllHome() {
+    public List<Home> findAll() {
         try {
             log.info("HomeController find all Homes start");
-            return homeService.findAllHome();
+            return homeService.findAll();
         } catch (Exception e) {
             log.error("HomeController find all Homes failure, error: {}", e.getMessage());
             return null;
@@ -74,10 +74,10 @@ public class HomeControllerImpl implements HomeController{
 
     @Override
     @DeleteMapping("/v1/home/delete/{id}")
-    public void deleteByIdHome(@PathVariable Long id) {
+    public void deleteById(@PathVariable Long id) {
         try {
-            log.info("HomeController delete by id Home({}) start", id);
-            homeService.deleteByIdHome(id);
+            log.info("HomeController delete by id Home(id: {}) start", id);
+            homeService.deleteById(id);
         } catch (Exception e) {
             log.error("HomeController delete by id Home failure, error: {}", e.getMessage());
         } finally {

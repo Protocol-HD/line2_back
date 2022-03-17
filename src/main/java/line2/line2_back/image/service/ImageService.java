@@ -5,11 +5,11 @@ import line2.line2_back.image.model.Image;
 import java.util.List;
 
 public interface ImageService {
-    Image saveImage(Image image);
+    Image save(Image image);
 
-    Image findByIdImage(Long id);
+    Image findById(Long id);
 
-    List<Image> findAllImages();
+    List<Image> findAll();
 
-    void deleteByIdImage(Long id);
+    void deleteById(Long id);
 }

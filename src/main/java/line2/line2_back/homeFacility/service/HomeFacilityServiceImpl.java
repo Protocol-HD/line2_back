@@ -15,7 +15,7 @@ public class HomeFacilityServiceImpl implements HomeFacilityService{
     private final HomeFacilityRepository homeFacilityRepository;
 
     @Override
-    public HomeFacility findByIdHomeFacility(Long id) {
+    public HomeFacility findById(Long id) {
         try {
             log.info("HomeFacilityService find by id HomeFacility(id: {}) start", id);
             return homeFacilityRepository.findById(id).get();
@@ -28,7 +28,7 @@ public class HomeFacilityServiceImpl implements HomeFacilityService{
     }
 
     @Override
-    public List<HomeFacility> findAllHomeFacility() {
+    public List<HomeFacility> findAll() {
         try {
             log.info("HomeFacilityService find all HomeFacilities start");
             return homeFacilityRepository.findAll();

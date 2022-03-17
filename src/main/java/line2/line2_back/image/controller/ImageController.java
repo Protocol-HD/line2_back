@@ -5,13 +5,13 @@ import line2.line2_back.image.model.Image;
 import java.util.List;
 
 public interface ImageController {
-    Image addImage(Image image);
+    Image add(Image image);
 
-    Image editImage(Image image);
+    Image edit(Image image);
 
-    Image findByIdImage(Long id);
+    Image findById(Long id);
 
-    List<Image> findAllImages();
+    List<Image> findAll();
 
-    void deleteByIdImage(Long id);
+    void deleteById(Long id);
 }

@@ -20,7 +20,7 @@ public class Room {
     private Long id;
     private String roomName;
     private int singleBed;
-    private int DoubleBed;
+    private int doubleBed;
     private int bedding;
     private String gender;
     private int maxHeadCount;

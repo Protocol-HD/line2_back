@@ -1,11 +1,13 @@
 package line2.line2_back.home.service;
 
 import line2.line2_back.home.model.Home;
+import line2.line2_back.home.model.HomeDtoInput;
+import line2.line2_back.systemMessage.SystemMessage;
 
 import java.util.List;
 
 public interface HomeService {
-    Home save(Home home);
+    SystemMessage save(HomeDtoInput homeDtoInput);
 
     Home findById(Long id);
 

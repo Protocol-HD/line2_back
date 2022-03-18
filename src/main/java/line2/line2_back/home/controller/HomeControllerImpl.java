@@ -1,7 +1,17 @@
 package line2.line2_back.home.controller;
 
 import line2.line2_back.home.model.Home;
+import line2.line2_back.home.model.HomeDtoInput;
 import line2.line2_back.home.service.HomeService;
+import line2.line2_back.homeFacility.service.HomeFacilityService;
+import line2.line2_back.homeFacilityTable.service.HomeFacilityTableService;
+import line2.line2_back.homeImageTable.service.HomeImageTableService;
+import line2.line2_back.homePolicy.service.HomePolicyService;
+import line2.line2_back.homePolicyTable.service.HomePolicyTableService;
+import line2.line2_back.homeRoomTable.service.HomeRoomTableService;
+import line2.line2_back.image.service.ImageService;
+import line2.line2_back.room.service.RoomService;
+import line2.line2_back.systemMessage.SystemMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +28,10 @@ public class HomeControllerImpl implements HomeController{
 
     @Override
     @PostMapping("/v1/home/add")
-    public Home add(@RequestBody Home home) {
+    public SystemMessage add(@RequestBody HomeDtoInput homeDtoInput) {
         try {
-            log.info("HomeController add Home({}) start", home);
-            return homeService.save(home);
+            log.info("HomeController add Home({}) start", homeDtoInput);
+            return homeService.save(homeDtoInput);
         } catch (Exception e) {
             log.error("HomeController add Home failure, error: {}", e.getMessage());
             return null;
@@ -32,10 +42,10 @@ public class HomeControllerImpl implements HomeController{
 
     @Override
     @PutMapping("/v1/home/edit")
-    public Home edit(@RequestBody Home home) {
+    public SystemMessage edit(@RequestBody HomeDtoInput homeDtoInput) {
         try {
-            log.info("HomeController edit Home(id: {}) start", home);
-            return homeService.save(home);
+            log.info("HomeController edit Home(id: {}) start", homeDtoInput);
+            return homeService.save(homeDtoInput);
         } catch (Exception e) {
             log.error("HomeController edit Home failure, error: {}", e.getMessage());
             return null;

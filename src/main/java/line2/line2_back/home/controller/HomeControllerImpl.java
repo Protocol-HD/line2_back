@@ -76,12 +76,13 @@ public class HomeControllerImpl implements HomeController {
 
     @Override
     @DeleteMapping("/v1/home/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public SystemMessage deleteById(@PathVariable Long id) {
         try {
             log.info("HomeController delete by id Home(id: {}) start", id);
-            homeService.deleteById(id);
+            return homeService.deleteById(id);
         } catch (Exception e) {
             log.error("HomeController delete by id Home failure, error: {}", e.getMessage());
+            return null;
         } finally {
             log.info("HomeController delete by id Home end");
         }

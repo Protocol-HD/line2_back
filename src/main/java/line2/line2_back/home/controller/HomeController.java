@@ -15,5 +15,5 @@ public interface HomeController {
 
     List<Home> findAll();
 
-    void deleteById(Long id);
+    SystemMessage deleteById(Long id);
 }

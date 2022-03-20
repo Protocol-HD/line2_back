@@ -1,6 +1,7 @@
 package line2.line2_back.home.model;
 
 import line2.line2_back.room.model.Room;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Getter
 @ToString
+@Builder
 public class HomeDto {
     private Long homeId;
     private String homeName;

@@ -11,7 +11,7 @@ public interface HomeController {
 
     SystemMessage edit(HomeDto homeDto);
 
-    Home findById(Long id);
+    HomeDto findById(Long id);
 
     List<Home> findAll();
 

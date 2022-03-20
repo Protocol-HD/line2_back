@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -176,10 +177,14 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public Home findById(Long id) {
+    public HomeDto findById(Long id) {
         try {
             log.info("HomeService find by id Home(id: {}) start", id);
-            return homeRepository.findById(id).get();
+            Home home = homeRepository.findById(id).get();
+            List<String> images = new ArrayList<String>();
+            List<Long> homePolicies = new ArrayList<Long>();
+
+            return null;
         } catch (Exception e) {
             log.error("HomeService find by id Home failure, error: {}", e.getMessage());
             return null;

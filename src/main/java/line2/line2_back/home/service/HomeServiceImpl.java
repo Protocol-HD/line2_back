@@ -1,7 +1,7 @@
 package line2.line2_back.home.service;
 
 import line2.line2_back.home.model.Home;
-import line2.line2_back.home.model.HomeDtoInput;
+import line2.line2_back.home.model.HomeDto;
 import line2.line2_back.home.repository.HomeRepository;
 import line2.line2_back.homeCategory.repository.HomeCategoryRepository;
 import line2.line2_back.homeFacility.repository.HomeFacilityRepository;
@@ -106,31 +106,31 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public SystemMessage add(HomeDtoInput homeDtoInput) {
+    public SystemMessage add(HomeDto homeDto) {
         try {
-            log.info("HomeService save Home({}) start", homeDtoInput);
+            log.info("HomeService save Home({}) start", homeDto);
             Home home = new Home();
             log.info("1. save home");
             home = homeRepository.save(Home.builder()
-                    .id(homeDtoInput.getHomeId())
-                    .homeName(homeDtoInput.getHomeName())
-                    .homeAddress(homeDtoInput.getHomeAddress())
-                    .coordinateX(homeDtoInput.getCoordinateX())
-                    .coordinateY(homeDtoInput.getCoordinateY())
-                    .homeCategory(homeCategoryRepository.findById(homeDtoInput.getHomeCategoryId()).get())
-                    .homeInformation(homeDtoInput.getHomeInformation())
-                    .hostId(homeDtoInput.getHostId())
-                    .homeZipCode(homeDtoInput.getHomeZipCode())
+                    .id(homeDto.getHomeId())
+                    .homeName(homeDto.getHomeName())
+                    .homeAddress(homeDto.getHomeAddress())
+                    .coordinateX(homeDto.getCoordinateX())
+                    .coordinateY(homeDto.getCoordinateY())
+                    .homeCategory(homeCategoryRepository.findById(homeDto.getHomeCategoryId()).get())
+                    .homeInformation(homeDto.getHomeInformation())
+                    .hostId(homeDto.getHostId())
+                    .homeZipCode(homeDto.getHomeZipCode())
                     .build());
 
             log.info("2. save home images");
-            HomeImageAdd(homeDtoInput.getImages(), home);
+            HomeImageAdd(homeDto.getImages(), home);
             log.info("3. save home policies");
-            HomePolicyAdd(homeDtoInput.getHomePolicies(), homeDtoInput.getHomePolicyCustom(), home);
+            HomePolicyAdd(homeDto.getHomePolicies(), homeDto.getHomePolicyCustom(), home);
             log.info("4. save home facilities");
-            HomeFacilityAdd(homeDtoInput.getHomeFacilities(), home);
+            HomeFacilityAdd(homeDto.getHomeFacilities(), home);
             log.info("5. save home rooms");
-            HomeRoomAdd(homeDtoInput.getRooms(), home);
+            HomeRoomAdd(homeDto.getRooms(), home);
             return SystemMessage.builder()
                     .code(1)
                     .message("숙소 등록 성공")
@@ -147,19 +147,19 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public SystemMessage edit(HomeDtoInput homeDtoInput) {
+    public SystemMessage edit(HomeDto homeDto) {
         try {
-            log.info("HomeService edit Home({}) start", homeDtoInput);
+            log.info("HomeService edit Home({}) start", homeDto);
             Home home = new Home();
             log.info("1. delete home images");
-            HomeImageDelete(homeDtoInput.getHomeId());
+            HomeImageDelete(homeDto.getHomeId());
             log.info("2. delete home policies");
-            HomePolicyDelete(homeDtoInput.getHomeId());
+            HomePolicyDelete(homeDto.getHomeId());
             log.info("3. delete home facilities");
-            HomeFacilityDelete(homeDtoInput.getHomeId());
+            HomeFacilityDelete(homeDto.getHomeId());
             log.info("4. delete home rooms");
-            HomeRoomDelete(homeDtoInput.getHomeId());
-            add(homeDtoInput);
+            HomeRoomDelete(homeDto.getHomeId());
+            add(homeDto);
             return SystemMessage.builder()
                     .code(1)
                     .message("숙소 정보 변경 성공")

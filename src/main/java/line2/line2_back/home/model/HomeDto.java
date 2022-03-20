@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @ToString
-public class HomeDtoInput {
+public class HomeDto {
     private Long homeId;
     private String homeName;
     private String homeAddress;

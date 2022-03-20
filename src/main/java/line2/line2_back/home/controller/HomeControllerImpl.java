@@ -1,7 +1,7 @@
 package line2.line2_back.home.controller;
 
 import line2.line2_back.home.model.Home;
-import line2.line2_back.home.model.HomeDtoInput;
+import line2.line2_back.home.model.HomeDto;
 import line2.line2_back.home.service.HomeService;
 import line2.line2_back.systemMessage.SystemMessage;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +20,10 @@ public class HomeControllerImpl implements HomeController {
 
     @Override
     @PostMapping("/v1/home")
-    public SystemMessage add(@RequestBody HomeDtoInput homeDtoInput) {
+    public SystemMessage add(@RequestBody HomeDto homeDto) {
         try {
-            log.info("HomeController add Home({}) start", homeDtoInput);
-            return homeService.add(homeDtoInput);
+            log.info("HomeController add Home({}) start", homeDto);
+            return homeService.add(homeDto);
         } catch (Exception e) {
             log.error("HomeController add Home failure, error: {}", e.getMessage());
             return null;
@@ -34,10 +34,10 @@ public class HomeControllerImpl implements HomeController {
 
     @Override
     @PutMapping("/v1/home")
-    public SystemMessage edit(@RequestBody HomeDtoInput homeDtoInput) {
+    public SystemMessage edit(@RequestBody HomeDto homeDto) {
         try {
-            log.info("HomeController edit Home(id: {}) start", homeDtoInput);
-            return homeService.edit(homeDtoInput);
+            log.info("HomeController edit Home(id: {}) start", homeDto);
+            return homeService.edit(homeDto);
         } catch (Exception e) {
             log.error("HomeController edit Home failure, error: {}", e.getMessage());
             return null;

@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -34,6 +36,32 @@ public class HomePolicyServiceImpl implements HomePolicyService{
             log.error("HomePolicyService delete by id HomePolicy failure, error: {}", e.getMessage());
         } finally {
             log.info("HomePolicyService delete by id HomePolicy end");
+        }
+    }
+
+    @Override
+    public List<HomePolicy> getInPolicies() {
+        try {
+            log.info("HomePolicyService find by policy type 1(check in policy) start");
+            return homePolicyRepository.findByPolicyType(1);
+        } catch (Exception e) {
+            log.error("HomePolicyService find by policy type 1(check in policy) failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomePolicyService find by policy type 1(check in policy) end");
+        }
+    }
+
+    @Override
+    public List<HomePolicy> getOutPolicies() {
+        try {
+            log.info("HomePolicyService find by policy type 2(check out policy) start");
+            return homePolicyRepository.findByPolicyType(2);
+        } catch (Exception e) {
+            log.error("HomePolicyService find by policy type 2(check out policy) failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomePolicyService find by policy type 2(check out policy) end");
         }
     }
 }

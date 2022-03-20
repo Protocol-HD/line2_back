@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -176,10 +177,49 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public Home findById(Long id) {
+    public HomeDto findById(Long id) {
         try {
             log.info("HomeService find by id Home(id: {}) start", id);
-            return homeRepository.findById(id).get();
+            log.info("1. find home");
+            Home home = homeRepository.findById(id).get();
+            List<String> images = new ArrayList<String>();
+            List<Long> homePolicies = new ArrayList<Long>();
+            List<Long> homeFacilities = new ArrayList<Long>();
+            List<Room> rooms = new ArrayList<Room>();
+
+            log.info("2. find all home image");
+            homeImageTableRepository.findByHomeId(id).forEach(homeImageTable -> {
+                images.add(homeImageTable.getImage().getImageName());
+            });
+            log.info("3. find all home policies");
+            homePolicyTableRepository.findByHomeId(id).forEach(homePolicyTable -> {
+                homePolicies.add(homePolicyTable.getHomePolicy().getId());
+            });
+            log.info("4. find all home facilities");
+            homeFacilityTableRepository.findByHomeId(id).forEach(homeFacilityTable -> {
+                homeFacilities.add(homeFacilityTable.getHomeFacility().getId());
+            });
+            log.info("5. find all home rooms");
+            homeRoomTableRepository.findByHomeId(id).forEach(homeRoomTable -> {
+                rooms.add(homeRoomTable.getRoom());
+            });
+
+            return HomeDto.builder()
+                    .homeId(id)
+                    .homeName(home.getHomeName())
+                    .homeAddress(home.getHomeAddress())
+                    .coordinateX(home.getCoordinateX())
+                    .coordinateY(home.getCoordinateY())
+                    .homeCategoryId(home.getHomeCategory().getId())
+                    .homeInformation(home.getHomeInformation())
+                    .hostId(home.getHostId())
+                    .homeZipCode(home.getHomeZipCode())
+                    .images(images)
+                    .homePolicies(homePolicies.subList(0, homePolicies.size() - 1))
+                    .homePolicyCustom(homePolicyRepository.findById(homePolicies.get(homePolicies.size() - 1)).get().getHomePolicy())
+                    .homeFacilities(homeFacilities)
+                    .rooms(rooms)
+                    .build();
         } catch (Exception e) {
             log.error("HomeService find by id Home failure, error: {}", e.getMessage());
             return null;
@@ -224,7 +264,7 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public SystemMessage deleteById(Long id) {
         try {
             log.info("HomeService delete by id Home(id: {}) start", id);
             log.info("1. delete home images");
@@ -237,8 +277,16 @@ public class HomeServiceImpl implements HomeService {
             HomeRoomDelete(id);
             log.info("5. delete home");
             homeRepository.deleteById(id);
+            return SystemMessage.builder()
+                    .code(1)
+                    .message("숙소 삭제 성공")
+                    .build();
         } catch (Exception e) {
             log.error("HomeService delete by id Home failure, error: {}", e.getMessage());
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("숙소 삭제 실패")
+                    .build();
         } finally {
             log.info("HomeService delete by id Home end");
         }

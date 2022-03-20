@@ -3,14 +3,6 @@ package line2.line2_back.home.controller;
 import line2.line2_back.home.model.Home;
 import line2.line2_back.home.model.HomeDtoInput;
 import line2.line2_back.home.service.HomeService;
-import line2.line2_back.homeFacility.service.HomeFacilityService;
-import line2.line2_back.homeFacilityTable.service.HomeFacilityTableService;
-import line2.line2_back.homeImageTable.service.HomeImageTableService;
-import line2.line2_back.homePolicy.service.HomePolicyService;
-import line2.line2_back.homePolicyTable.service.HomePolicyTableService;
-import line2.line2_back.homeRoomTable.service.HomeRoomTableService;
-import line2.line2_back.image.service.ImageService;
-import line2.line2_back.room.service.RoomService;
 import line2.line2_back.systemMessage.SystemMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,15 +15,15 @@ import java.util.List;
 @RequestMapping("/book")
 @RequiredArgsConstructor
 @CrossOrigin
-public class HomeControllerImpl implements HomeController{
+public class HomeControllerImpl implements HomeController {
     private final HomeService homeService;
 
     @Override
-    @PostMapping("/v1/home/add")
+    @PostMapping("/v1/home")
     public SystemMessage add(@RequestBody HomeDtoInput homeDtoInput) {
         try {
             log.info("HomeController add Home({}) start", homeDtoInput);
-            return homeService.save(homeDtoInput);
+            return homeService.add(homeDtoInput);
         } catch (Exception e) {
             log.error("HomeController add Home failure, error: {}", e.getMessage());
             return null;
@@ -41,11 +33,11 @@ public class HomeControllerImpl implements HomeController{
     }
 
     @Override
-    @PutMapping("/v1/home/edit")
+    @PutMapping("/v1/home")
     public SystemMessage edit(@RequestBody HomeDtoInput homeDtoInput) {
         try {
             log.info("HomeController edit Home(id: {}) start", homeDtoInput);
-            return homeService.save(homeDtoInput);
+            return homeService.edit(homeDtoInput);
         } catch (Exception e) {
             log.error("HomeController edit Home failure, error: {}", e.getMessage());
             return null;
@@ -55,7 +47,7 @@ public class HomeControllerImpl implements HomeController{
     }
 
     @Override
-    @GetMapping("/v1/home/get/{id}")
+    @GetMapping("/v1/home/{id}")
     public Home findById(@PathVariable Long id) {
         try {
             log.info("HomeController find by id Home(id: {}) start", id);
@@ -69,7 +61,7 @@ public class HomeControllerImpl implements HomeController{
     }
 
     @Override
-    @GetMapping("/v1/home/get_list")
+    @GetMapping("/v1/home/list")
     public List<Home> findAll() {
         try {
             log.info("HomeController find all Homes start");
@@ -83,7 +75,7 @@ public class HomeControllerImpl implements HomeController{
     }
 
     @Override
-    @DeleteMapping("/v1/home/delete/{id}")
+    @DeleteMapping("/v1/home/{id}")
     public void deleteById(@PathVariable Long id) {
         try {
             log.info("HomeController delete by id Home(id: {}) start", id);

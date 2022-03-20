@@ -15,13 +15,12 @@ public class HomeDtoInput {
     private double coordinateX;
     private double coordinateY;
     private Long homeCategoryId;
-    private String homeInfomation;
-    private String homeHost;
-    private String homeHostPhone;
-    private String homeHostEmail;
+    private String homeInformation;
+    private Long hostId;
     private String homeZipCode;
     private List<String> images;
-    private List<String> homePolicies;
+    private List<Long> homePolicies;
+    private String homePolicyCustom;
     private List<Long> homeFacilities;
     private List<Room> rooms;
 }

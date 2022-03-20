@@ -52,15 +52,26 @@ public class HomeServiceImpl implements HomeService {
         });
     }
 
-    public void HomePolicyAdd(List<String> homePolicies, Home home) {
+    public void HomePolicyAdd(List<Long> homePolicies, String homePolicyCustom, Home home) {
         homePolicies.forEach(homePolicy -> {
             homePolicyTableRepository.save(
                     HomePolicyTable.builder()
                             .home(home)
-                            .homePolicy(homePolicyRepository.save(HomePolicy.builder().homePolicy(homePolicy).build()))
+                            .homePolicy(homePolicyRepository.findById(homePolicy).get())
                             .build()
             );
         });
+        homePolicyTableRepository.save(
+                HomePolicyTable.builder()
+                        .home(home)
+                        .homePolicy(homePolicyRepository.save(
+                                HomePolicy.builder()
+                                        .homePolicy(homePolicyCustom)
+                                        .policyType(3)
+                                        .build())
+                        )
+                        .build()
+        );
     }
 
     public void HomeFacilityAdd(List<Long> homeFacilities, Home home) {
@@ -95,7 +106,7 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public SystemMessage save(HomeDtoInput homeDtoInput) {
+    public SystemMessage add(HomeDtoInput homeDtoInput) {
         try {
             log.info("HomeService save Home({}) start", homeDtoInput);
             Home home = new Home();
@@ -107,17 +118,15 @@ public class HomeServiceImpl implements HomeService {
                     .coordinateX(homeDtoInput.getCoordinateX())
                     .coordinateY(homeDtoInput.getCoordinateY())
                     .homeCategory(homeCategoryRepository.findById(homeDtoInput.getHomeCategoryId()).get())
-                    .homeInfomation(homeDtoInput.getHomeInfomation())
-                    .homeHost(homeDtoInput.getHomeHost())
-                    .homeHostPhone(homeDtoInput.getHomeHostPhone())
-                    .homeHostEmail(homeDtoInput.getHomeHostEmail())
+                    .homeInformation(homeDtoInput.getHomeInformation())
+                    .hostId(homeDtoInput.getHostId())
                     .homeZipCode(homeDtoInput.getHomeZipCode())
                     .build());
 
             log.info("2. save home images");
             HomeImageAdd(homeDtoInput.getImages(), home);
             log.info("3. save home policies");
-            HomePolicyAdd(homeDtoInput.getHomePolicies(), home);
+            HomePolicyAdd(homeDtoInput.getHomePolicies(), homeDtoInput.getHomePolicyCustom(), home);
             log.info("4. save home facilities");
             HomeFacilityAdd(homeDtoInput.getHomeFacilities(), home);
             log.info("5. save home rooms");
@@ -131,6 +140,35 @@ public class HomeServiceImpl implements HomeService {
             return SystemMessage.builder()
                     .code(2)
                     .message("숙소 등록 실패")
+                    .build();
+        } finally {
+            log.info("HomeService save Home end");
+        }
+    }
+
+    @Override
+    public SystemMessage edit(HomeDtoInput homeDtoInput) {
+        try {
+            log.info("HomeService edit Home({}) start", homeDtoInput);
+            Home home = new Home();
+            log.info("1. delete home images");
+            HomeImageDelete(homeDtoInput.getHomeId());
+            log.info("2. delete home policies");
+            HomePolicyDelete(homeDtoInput.getHomeId());
+            log.info("3. delete home facilities");
+            HomeFacilityDelete(homeDtoInput.getHomeId());
+            log.info("4. delete home rooms");
+            HomeRoomDelete(homeDtoInput.getHomeId());
+            add(homeDtoInput);
+            return SystemMessage.builder()
+                    .code(1)
+                    .message("숙소 정보 변경 성공")
+                    .build();
+        } catch (Exception e) {
+            log.error("HomeService save Home failure, error: {}", e.getMessage());
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("숙소 정보 변경 실패")
                     .build();
         } finally {
             log.info("HomeService save Home end");
@@ -163,10 +201,41 @@ public class HomeServiceImpl implements HomeService {
         }
     }
 
+    public void HomeImageDelete(Long id) {
+        homeImageTableRepository.findByHomeId(id).forEach(homeImage -> {
+            homeImageTableRepository.delete(homeImage);
+            imageRepository.deleteById(homeImage.getImage().getId());
+        });
+    }
+
+    public void HomePolicyDelete(Long id) {
+        homePolicyTableRepository.deleteAll(homePolicyTableRepository.findByHomeId(id));
+    }
+
+    public void HomeFacilityDelete(Long id) {
+        homeFacilityTableRepository.deleteAll(homeFacilityTableRepository.findByHomeId(id));
+    }
+
+    public void HomeRoomDelete(Long id) {
+        homeRoomTableRepository.findByHomeId(id).forEach(homeRoom -> {
+            homeRoomTableRepository.delete(homeRoom);
+            roomRepository.deleteById(homeRoom.getRoom().getId());
+        });
+    }
+
     @Override
     public void deleteById(Long id) {
         try {
             log.info("HomeService delete by id Home(id: {}) start", id);
+            log.info("1. delete home images");
+            HomeImageDelete(id);
+            log.info("2. delete home policies");
+            HomePolicyDelete(id);
+            log.info("3. delete home facilities");
+            HomeFacilityDelete(id);
+            log.info("4. delete home rooms");
+            HomeRoomDelete(id);
+            log.info("5. delete home");
             homeRepository.deleteById(id);
         } catch (Exception e) {
             log.error("HomeService delete by id Home failure, error: {}", e.getMessage());

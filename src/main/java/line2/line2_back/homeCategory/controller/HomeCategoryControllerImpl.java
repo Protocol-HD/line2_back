@@ -17,7 +17,7 @@ public class HomeCategoryControllerImpl implements HomeCategoryController{
     private final HomeCategoryService homeCategoryService;
 
     @Override
-    @GetMapping("/v1/home_category/get/{id}")
+    @GetMapping("/v1/home_category/{id}")
     public HomeCategory findById(@PathVariable Long id) {
         try {
             log.info("HomeCategoryController find by id HomeCategory(id: {}) start", id);
@@ -31,7 +31,7 @@ public class HomeCategoryControllerImpl implements HomeCategoryController{
     }
 
     @Override
-    @GetMapping("/v1/home_category/get_list")
+    @GetMapping("/v1/home_category/list")
     public List<HomeCategory> findAll() {
         try {
             log.info("HomeCategoryController find all HomeCategories start");

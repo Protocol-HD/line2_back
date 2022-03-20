@@ -17,7 +17,7 @@ public class HomeRoomTableControllerImpl implements HomeRoomTableController{
     private final HomeRoomTableService homeRoomTableService;
 
     @Override
-    @PostMapping("/v1/home_room_table/add")
+    @PostMapping("/v1/home_room_table")
     public HomeRoomTable add(@RequestBody HomeRoomTable homeRoomTable) {
         try {
             log.info("HomeRoomTableController add HomeRoomTable({}) start", homeRoomTable);
@@ -31,7 +31,7 @@ public class HomeRoomTableControllerImpl implements HomeRoomTableController{
     }
 
     @Override
-    @PutMapping("/v1/home_room_table/edit")
+    @PutMapping("/v1/home_room_table")
     public HomeRoomTable edit(@RequestBody HomeRoomTable homeRoomTable) {
         try {
             log.info("HomeRoomTableController edit HomeRoomTable({}) start", homeRoomTable);
@@ -45,7 +45,7 @@ public class HomeRoomTableControllerImpl implements HomeRoomTableController{
     }
 
     @Override
-    @DeleteMapping("/v1/home_room_table/delete/{id}")
+    @DeleteMapping("/v1/home_room_table/{id}")
     public void deleteById(@PathVariable Long id) {
         try {
             log.info("HomeRoomTableController delete by id HomeRoomTable(id: {}) start", id);
@@ -58,7 +58,7 @@ public class HomeRoomTableControllerImpl implements HomeRoomTableController{
     }
 
     @Override
-    @GetMapping("/v1/home_room_table/get_home_id/{id}")
+    @GetMapping("/v1/home_room_table/home/{id}")
     public List<HomeRoomTable> findByHomeId(@PathVariable Long id) {
         try {
             log.info("HomeRoomTableController find by id HomeRoomTable(id: {}) start", id);

@@ -15,7 +15,7 @@ public class RoomControllerImpl implements RoomController{
     private final RoomService roomService;
 
     @Override
-    @PostMapping("/v1/room/add")
+    @PostMapping("/v1/room")
     public Room add(@RequestBody Room room) {
         try {
             log.info("RoomController add Room({}) start", room);
@@ -29,7 +29,7 @@ public class RoomControllerImpl implements RoomController{
     }
 
     @Override
-    @PutMapping("/v1/room/edit")
+    @PutMapping("/v1/room")
     public Room edit(@RequestBody Room room) {
         try {
             log.info("RoomController edit Room({}) start", room);
@@ -43,7 +43,7 @@ public class RoomControllerImpl implements RoomController{
     }
 
     @Override
-    @DeleteMapping("/v1/room/delete/{id}")
+    @DeleteMapping("/v1/room/{id}")
     public void delete(@PathVariable Long id) {
         try {
             log.info("RoomController delete by id Room({}) start", id);

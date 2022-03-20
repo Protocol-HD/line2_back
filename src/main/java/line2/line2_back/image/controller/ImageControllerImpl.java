@@ -17,7 +17,7 @@ public class ImageControllerImpl implements ImageController {
     private final ImageService imageService;
 
     @Override
-    @PostMapping("/v1/image/add")
+    @PostMapping("/v1/image")
     public Image add(@RequestBody Image image) {
         try {
             log.info("ImageController add Image({}) start", image);
@@ -31,7 +31,7 @@ public class ImageControllerImpl implements ImageController {
     }
 
     @Override
-    @PutMapping("/v1/image/edit")
+    @PutMapping("/v1/image")
     public Image edit(@RequestBody Image image) {
         try {
             log.info("ImageController edit Image({}) start", image);
@@ -45,7 +45,7 @@ public class ImageControllerImpl implements ImageController {
     }
 
     @Override
-    @GetMapping("/v1/image/get/{id}")
+    @GetMapping("/v1/image/{id}")
     public Image findById(@PathVariable Long id) {
         try {
             log.info("ImageController find by id Image(id: {}) start", id);
@@ -59,7 +59,7 @@ public class ImageControllerImpl implements ImageController {
     }
 
     @Override
-    @GetMapping("/v1/image/get_list")
+    @GetMapping("/v1/image/list")
     public List<Image> findAll() {
         try {
             log.info("ImageController find all Images start");
@@ -73,7 +73,7 @@ public class ImageControllerImpl implements ImageController {
     }
 
     @Override
-    @DeleteMapping("/v1/image/delete/{id}")
+    @DeleteMapping("/v1/image/{id}")
     public void deleteById(@PathVariable Long id) {
         try {
             log.info("ImageController delete by id Image(id: {}) start", id);

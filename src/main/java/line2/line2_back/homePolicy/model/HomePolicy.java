@@ -18,5 +18,6 @@ public class HomePolicy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private int policyType;
     private String homePolicy;
 }

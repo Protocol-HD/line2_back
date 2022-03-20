@@ -17,7 +17,7 @@ public class HomeFacilityTableControllerImpl implements HomeFacilityTableControl
     private final HomeFacilityTableService homeFacilityTableService;
 
     @Override
-    @PostMapping("/v1/home_facility_table/add")
+    @PostMapping("/v1/home_facility_table")
     public HomeFacilityTable add(@RequestBody HomeFacilityTable homeFacilityTable) {
         try {
             log.info("HomeFacilityTableController add HomeFacilityTable({}) start", homeFacilityTable);
@@ -31,7 +31,7 @@ public class HomeFacilityTableControllerImpl implements HomeFacilityTableControl
     }
 
     @Override
-    @PutMapping("/v1/home_facility_table/edit")
+    @PutMapping("/v1/home_facility_table")
     public HomeFacilityTable edit(@RequestBody HomeFacilityTable homeFacilityTable) {
         try {
             log.info("HomeFacilityTableController edit HomeFacilityTable({}) start", homeFacilityTable);
@@ -45,7 +45,7 @@ public class HomeFacilityTableControllerImpl implements HomeFacilityTableControl
     }
 
     @Override
-    @DeleteMapping("/v1/home_facility_table/delete/{id}")
+    @DeleteMapping("/v1/home_facility_table/{id}")
     public void deleteById(@PathVariable Long id) {
         try {
             log.info("HomeFacilityTableController delete by id HomeFacilityTable(id: {}) start", id);
@@ -58,7 +58,7 @@ public class HomeFacilityTableControllerImpl implements HomeFacilityTableControl
     }
 
     @Override
-    @GetMapping("/v1/home_facility_table/get_home_id/{id}")
+    @GetMapping("/v1/home_facility_table/home/{id}")
     public List<HomeFacilityTable> findByHomeId(@PathVariable Long id) {
         try {
             log.info("HomeFacilityTableController find by home id HomeFacilityTable(id: {}) start", id);

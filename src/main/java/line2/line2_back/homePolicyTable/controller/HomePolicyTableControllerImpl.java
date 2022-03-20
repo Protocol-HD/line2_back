@@ -17,7 +17,7 @@ public class HomePolicyTableControllerImpl implements HomePolicyTableController{
     private final HomePolicyTableService homePolicyTableService;
 
     @Override
-    @PostMapping("/v1/home_policy_table/add")
+    @PostMapping("/v1/home_policy_table")
     public HomePolicyTable add(@RequestBody HomePolicyTable homePolicyTable) {
         try {
             log.info("HomePolicyTableController add HomePolicyTable({}) start", homePolicyTable);
@@ -31,7 +31,7 @@ public class HomePolicyTableControllerImpl implements HomePolicyTableController{
     }
 
     @Override
-    @PutMapping("/v1/home_policy_table/edit")
+    @PutMapping("/v1/home_policy_table")
     public HomePolicyTable edit(HomePolicyTable homePolicyTable) {
         try {
             log.info("HomePolicyTableController edit HomePolicyTable({}) start", homePolicyTable);
@@ -45,7 +45,7 @@ public class HomePolicyTableControllerImpl implements HomePolicyTableController{
     }
 
     @Override
-    @DeleteMapping("/v1/home_policy_table/delete/{id}")
+    @DeleteMapping("/v1/home_policy_table/{id}")
     public void deleteById(@PathVariable Long id) {
         try {
             log.info("HomePolicyTableController delete by id HomePolicyTable(id: {}) start", id);
@@ -58,7 +58,7 @@ public class HomePolicyTableControllerImpl implements HomePolicyTableController{
     }
 
     @Override
-    @GetMapping("/v1/home_policy_table/get_home_id/{id}")
+    @GetMapping("/v1/home_policy_table/home/{id}")
     public List<HomePolicyTable> findByHomeId(@PathVariable Long id) {
         try {
             log.info("HomePolicyTableController find by id HomePolicyTable(id: {}) start", id);

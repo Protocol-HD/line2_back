@@ -17,7 +17,7 @@ public class HomeFacilityControllerImpl implements HomeFacilityController{
     private final HomeFacilityService homeFacilityService;
 
     @Override
-    @GetMapping("/v1/home_facility/get/{id}")
+    @GetMapping("/v1/home_facility/{id}")
     public HomeFacility findById(@PathVariable Long id) {
         try {
             log.info("HomeFacilityController find by id HomeFacility(id: {}) start", id);
@@ -31,7 +31,7 @@ public class HomeFacilityControllerImpl implements HomeFacilityController{
     }
 
     @Override
-    @GetMapping("/v1/home_facility/get_list")
+    @GetMapping("/v1/home_facility/list")
     public List<HomeFacility> findAll() {
         try {
             log.info("HomeFacilityController find all HomeFacilities start");

@@ -17,7 +17,7 @@ public class HomeImageTableControllerImpl implements HomeImageTableController{
     private final HomeImageTableService homeImageTableService;
 
     @Override
-    @PostMapping("/v1/home_image_table/add")
+    @PostMapping("/v1/home_image_table")
     public HomeImageTable add(@RequestBody HomeImageTable homeImageTable) {
         try {
             log.info("HomeImageTableController add HomeImageTable({}) start", homeImageTable);
@@ -31,7 +31,7 @@ public class HomeImageTableControllerImpl implements HomeImageTableController{
     }
 
     @Override
-    @PutMapping("/v1/home_image_table/edit")
+    @PutMapping("/v1/home_image_table")
     public HomeImageTable edit(@RequestBody HomeImageTable homeImageTable) {
         try {
             log.info("HomeImageTableController edit HomeImageTable({}) start", homeImageTable);
@@ -45,7 +45,7 @@ public class HomeImageTableControllerImpl implements HomeImageTableController{
     }
 
     @Override
-    @DeleteMapping("/v1/home_image_table/delete/{id}")
+    @DeleteMapping("/v1/home_image_table/{id}")
     public void deleteById(@PathVariable Long id) {
         try {
             log.info("HomeImageTableController delete by id HomeImageTable(id: {}) start", id);
@@ -58,7 +58,7 @@ public class HomeImageTableControllerImpl implements HomeImageTableController{
     }
 
     @Override
-    @GetMapping("/v1/home_image_table/get_home_id/{id}")
+    @GetMapping("/v1/home_image_table/home/{id}")
     public List<HomeImageTable> findByHomeId(@PathVariable Long id) {
         try {
             log.info("HomeImageTableController find by home id HomeImageTable(id: {}) start", id);

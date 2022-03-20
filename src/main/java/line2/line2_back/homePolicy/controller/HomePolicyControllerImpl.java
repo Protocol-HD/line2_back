@@ -15,7 +15,7 @@ public class HomePolicyControllerImpl implements HomePolicyController{
     private final HomePolicyService homePolicyService;
 
     @Override
-    @PostMapping("/v1/home_policy/add")
+    @PostMapping("/v1/home_policy")
     public HomePolicy add(@RequestBody HomePolicy homePolicy) {
         try {
             log.info("HomePolicyController add HomePolicy({}) start", homePolicy);
@@ -29,7 +29,7 @@ public class HomePolicyControllerImpl implements HomePolicyController{
     }
 
     @Override
-    @PutMapping("/v1/home_policy/edit")
+    @PutMapping("/v1/home_policy")
     public HomePolicy edit(@RequestBody HomePolicy homePolicy) {
         try {
             log.info("HomePolicyController edit HomePolicy({}) start", homePolicy);
@@ -43,7 +43,7 @@ public class HomePolicyControllerImpl implements HomePolicyController{
     }
 
     @Override
-    @DeleteMapping("/v1/home_policy/delete/{id}")
+    @DeleteMapping("/v1/home_policy/{id}")
     public void delete(@PathVariable Long id) {
         try {
             log.info("HomePolicyController delete by id HomePolicy({}) start", id);

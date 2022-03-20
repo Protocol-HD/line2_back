@@ -23,9 +23,7 @@ public class Home {
     @ManyToOne
     @JoinColumn(name = "home_category_id")
     private HomeCategory homeCategory;
-    private String homeInfomation;
-    private String homeHost;
-    private String homeHostPhone;
-    private String homeHostEmail;
+    private String homeInformation;
+    private Long hostId;
     private String homeZipCode;
 }

@@ -99,6 +99,7 @@ public class HomeServiceImpl implements HomeService {
                                             .bedding(room.getBedding())
                                             .gender(room.getGender())
                                             .maxHeadCount(room.getMaxHeadCount())
+                                            .headCount(0)
                                             .build())
                             )
                             .build()

@@ -87,4 +87,18 @@ public class HomeControllerImpl implements HomeController {
             log.info("HomeController delete by id Home end");
         }
     }
+
+    @Override
+    @GetMapping("/v1/home/find/{homeAddress}")
+    public List<Home> findByHomeAddress(@PathVariable String homeAddress) {
+        try {
+            log.info("HomeController find by home address Homes(homeAddress: {}) start", homeAddress);
+            return homeService.findByHomeAddress(homeAddress);
+        } catch (Exception e) {
+            log.error("HomeController find by home address Homes failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomeController find by home address Homes end");
+        }
+    }
 }

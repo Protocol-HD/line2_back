@@ -292,4 +292,17 @@ public class HomeServiceImpl implements HomeService {
             log.info("HomeService delete by id Home end");
         }
     }
+
+    @Override
+    public List<Home> findByHomeAddress(String homeAddress) {
+        try {
+            log.info("HomeService find by home address Homes(homeAddress: {}) start", homeAddress);
+            return homeRepository.findByHomeAddressContaining(homeAddress);
+        } catch (Exception e) {
+            log.error("HomeService find by home address Homes failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomeService find by home address Homes end");
+        }
+    }
 }

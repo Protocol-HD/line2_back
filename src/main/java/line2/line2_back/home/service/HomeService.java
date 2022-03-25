@@ -16,4 +16,6 @@ public interface HomeService {
     List<Home> findAll();
 
     SystemMessage deleteById(Long id);
+
+    List<Home> findByHomeAddress(String homeAddress);
 }

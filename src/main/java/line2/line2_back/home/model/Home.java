@@ -1,6 +1,7 @@
 package line2.line2_back.home.model;
 
 import line2.line2_back.homeCategory.model.HomeCategory;
+import line2.line2_back.user.model.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,8 @@ public class Home {
     @JoinColumn(name = "home_category_id")
     private HomeCategory homeCategory;
     private String homeInformation;
-    private Long hostId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     private String homeZipCode;
 }

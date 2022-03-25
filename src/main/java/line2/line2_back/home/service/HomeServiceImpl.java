@@ -20,6 +20,7 @@ import line2.line2_back.image.repository.ImageRepository;
 import line2.line2_back.room.model.Room;
 import line2.line2_back.room.repository.RoomRepository;
 import line2.line2_back.systemMessage.SystemMessage;
+import line2.line2_back.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,7 @@ public class HomeServiceImpl implements HomeService {
     private final HomeFacilityTableRepository homeFacilityTableRepository;
     private final RoomRepository roomRepository;
     private final HomeRoomTableRepository homeRoomTableRepository;
+    private final UserRepository userRepository;
 
     public void HomeImageAdd(List<String> images, Home home) {
         images.forEach(image -> {
@@ -120,7 +122,7 @@ public class HomeServiceImpl implements HomeService {
                     .coordinateY(homeDto.getCoordinateY())
                     .homeCategory(homeCategoryRepository.findById(homeDto.getHomeCategoryId()).get())
                     .homeInformation(homeDto.getHomeInformation())
-                    .hostId(homeDto.getHostId())
+                    .user(userRepository.findById(homeDto.getUserId()).get())
                     .homeZipCode(homeDto.getHomeZipCode())
                     .build());
 
@@ -181,10 +183,10 @@ public class HomeServiceImpl implements HomeService {
             log.info("HomeService find by id Home(id: {}) start", id);
             log.info("1. find home");
             Home home = homeRepository.findById(id).get();
-            List<String> images = new ArrayList<String>();
-            List<Long> homePolicies = new ArrayList<Long>();
-            List<Long> homeFacilities = new ArrayList<Long>();
-            List<Room> rooms = new ArrayList<Room>();
+            List<String> images = new ArrayList<>();
+            List<Long> homePolicies = new ArrayList<>();
+            List<Long> homeFacilities = new ArrayList<>();
+            List<Room> rooms = new ArrayList<>();
 
             log.info("2. find all home image");
             homeImageTableRepository.findByHomeId(id).forEach(homeImageTable -> {
@@ -211,7 +213,7 @@ public class HomeServiceImpl implements HomeService {
                     .coordinateY(home.getCoordinateY())
                     .homeCategoryId(home.getHomeCategory().getId())
                     .homeInformation(home.getHomeInformation())
-                    .hostId(home.getHostId())
+                    .userId(home.getUser().getId())
                     .homeZipCode(home.getHomeZipCode())
                     .images(images)
                     .homePolicies(homePolicies.subList(0, homePolicies.size() - 1))

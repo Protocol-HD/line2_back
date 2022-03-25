@@ -18,7 +18,7 @@ public class HomeDto {
     private double coordinateY;
     private Long homeCategoryId;
     private String homeInformation;
-    private Long hostId;
+    private Long userId;
     private String homeZipCode;
     private List<String> images;
     private List<Long> homePolicies;

@@ -26,7 +26,10 @@ public class HomeControllerImpl implements HomeController {
             return homeService.add(homeDto);
         } catch (Exception e) {
             log.error("HomeController add Home failure, error: {}", e.getMessage());
-            return null;
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("숙소 등록 실패")
+                    .build();
         } finally {
             log.info("HomeController add Home end");
         }
@@ -40,7 +43,10 @@ public class HomeControllerImpl implements HomeController {
             return homeService.edit(homeDto);
         } catch (Exception e) {
             log.error("HomeController edit Home failure, error: {}", e.getMessage());
-            return null;
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("숙소 정보 변경 실패")
+                    .build();
         } finally {
             log.info("HomeController edit Home end");
         }
@@ -82,7 +88,10 @@ public class HomeControllerImpl implements HomeController {
             return homeService.deleteById(id);
         } catch (Exception e) {
             log.error("HomeController delete by id Home failure, error: {}", e.getMessage());
-            return null;
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("숙소 삭제 실패")
+                    .build();
         } finally {
             log.info("HomeController delete by id Home end");
         }

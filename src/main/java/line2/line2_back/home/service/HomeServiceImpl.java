@@ -111,9 +111,8 @@ public class HomeServiceImpl implements HomeService {
     public SystemMessage add(HomeDto homeDto) {
         try {
             log.info("HomeService save Home({}) start", homeDto);
-            Home home = new Home();
             log.info("1. save home");
-            home = homeRepository.save(Home.builder()
+            Home home = homeRepository.save(Home.builder()
                     .id(homeDto.getHomeId())
                     .homeName(homeDto.getHomeName())
                     .homeAddress(homeDto.getHomeAddress())
@@ -152,7 +151,6 @@ public class HomeServiceImpl implements HomeService {
     public SystemMessage edit(HomeDto homeDto) {
         try {
             log.info("HomeService edit Home({}) start", homeDto);
-            Home home = new Home();
             log.info("1. delete home images");
             HomeImageDelete(homeDto.getHomeId());
             log.info("2. delete home policies");

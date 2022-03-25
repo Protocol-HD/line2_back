@@ -64,7 +64,10 @@ public class RoomControllerImpl implements RoomController{
             return roomService.addHeadCount(id);
         } catch (Exception e) {
             log.error("RoomController add headcount Room failure, error: {}", e.getMessage());
-            return null;
+            return SystemMessage.builder()
+                    .code(3)
+                    .message("인원 추가 실패")
+                    .build();
         } finally {
             log.info("RoomController add headcount Room end");
         }
@@ -78,7 +81,10 @@ public class RoomControllerImpl implements RoomController{
             return roomService.subHeadCount(id);
         } catch (Exception e) {
             log.error("RoomController sub headcount Room failure, error: {}", e.getMessage());
-            return null;
+            return SystemMessage.builder()
+                    .code(3)
+                    .message("인원 빼기 실패")
+                    .build();
         } finally {
             log.info("RoomController sub headcount Room end");
         }

@@ -23,7 +23,10 @@ public class UserControllerImpl implements UserController {
             return userService.add(user);
         } catch (Exception e) {
             log.error("UserController add User failure, error: {}", e.getMessage());
-            return null;
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("유저 등록 실패")
+                    .build();
         } finally {
             log.info("UserController add User end");
         }
@@ -37,7 +40,10 @@ public class UserControllerImpl implements UserController {
             return userService.edit(user);
         } catch (Exception e) {
             log.error("UserController edit User failure, error: {}", e.getMessage());
-            return null;
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("유저 수정 실패")
+                    .build();
         } finally {
             log.info("UserController edit User end");
         }
@@ -65,7 +71,10 @@ public class UserControllerImpl implements UserController {
             return userService.deleteById(id);
         } catch (Exception e) {
             log.error("UserController delete by id User failure, error: {}", e.getMessage());
-            return null;
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("유저 삭제 실패")
+                    .build();
         } finally {
             log.info("UserController delete by id User end");
         }

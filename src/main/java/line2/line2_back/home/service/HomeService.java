@@ -1,7 +1,7 @@
 package line2.line2_back.home.service;
 
-import line2.line2_back.home.model.Home;
 import line2.line2_back.home.model.HomeDto;
+import line2.line2_back.home.model.HomeListDto;
 import line2.line2_back.systemMessage.SystemMessage;
 
 import java.util.List;
@@ -13,9 +13,9 @@ public interface HomeService {
 
     HomeDto findById(Long id);
 
-    List<Home> findAll();
+    List<HomeListDto> findAll();
 
     SystemMessage deleteById(Long id);
 
-    List<Home> findByHomeAddress(String homeAddress);
+    List<HomeListDto> findByHomeAddress(String homeAddress);
 }

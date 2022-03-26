@@ -1,5 +1,6 @@
 package line2.line2_back.room.service;
 
+import line2.line2_back.home.repository.HomeRepository;
 import line2.line2_back.room.model.Room;
 import line2.line2_back.room.repository.RoomRepository;
 import line2.line2_back.systemMessage.SystemMessage;
@@ -17,6 +18,7 @@ public class RoomServiceImpl implements RoomService {
     public Room save(Room room) {
         try {
             log.info("RoomService save Room({}) start", room);
+
             return roomRepository.save(room);
         } catch (Exception e) {
             log.error("RoomService save Room failure, error: {}", e.getMessage());

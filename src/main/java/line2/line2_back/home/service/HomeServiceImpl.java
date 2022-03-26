@@ -2,6 +2,7 @@ package line2.line2_back.home.service;
 
 import line2.line2_back.home.model.Home;
 import line2.line2_back.home.model.HomeDto;
+import line2.line2_back.home.model.HomeListDto;
 import line2.line2_back.home.repository.HomeRepository;
 import line2.line2_back.homeCategory.repository.HomeCategoryRepository;
 import line2.line2_back.homeFacility.repository.HomeFacilityRepository;
@@ -88,7 +89,7 @@ public class HomeServiceImpl implements HomeService {
         });
     }
 
-    public void HomeRoomAdd(List<Room> rooms, Home home) {
+    public Home HomeRoomAdd(List<Room> rooms, Home home) {
         rooms.forEach(room -> {
             homeRoomTableRepository.save(
                     HomeRoomTable.builder()
@@ -106,7 +107,9 @@ public class HomeServiceImpl implements HomeService {
                             )
                             .build()
             );
+            home.setMaxHeadCount(home.getMaxHeadCount() + room.getMaxHeadCount());
         });
+        return home;
     }
 
     @Override
@@ -124,6 +127,9 @@ public class HomeServiceImpl implements HomeService {
                     .homeInformation(homeDto.getHomeInformation())
                     .user(userRepository.findById(homeDto.getUserId()).get())
                     .homeZipCode(homeDto.getHomeZipCode())
+                    .headCount(
+                            (homeDto.getHomeId() == null) ? 0 : homeRepository.findById(homeDto.getHomeId()).get().getHeadCount()
+                    )
                     .build());
 
             log.info("2. save home images");
@@ -133,7 +139,7 @@ public class HomeServiceImpl implements HomeService {
             log.info("4. save home facilities");
             HomeFacilityAdd(homeDto.getHomeFacilities(), home);
             log.info("5. save home rooms");
-            HomeRoomAdd(homeDto.getRooms(), home);
+            homeRepository.save(HomeRoomAdd(homeDto.getRooms(), home));
             return SystemMessage.builder()
                     .code(1)
                     .message("숙소 등록 성공")
@@ -205,6 +211,7 @@ public class HomeServiceImpl implements HomeService {
                 rooms.add(homeRoomTable.getRoom());
             });
 
+            log.info("6. prepare done");
             return HomeDto.builder()
                     .homeId(id)
                     .homeName(home.getHomeName())
@@ -230,10 +237,10 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public List<Home> findAll() {
+    public List<HomeListDto> findAll() {
         try {
             log.info("HomeService find all Homes start");
-            return homeRepository.findAll();
+            return homeListToHomeListDto(homeRepository.findAll());
         } catch (Exception e) {
             log.error("HomeService find all Homes failure, error: {}", e.getMessage());
             return null;
@@ -294,15 +301,40 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public List<Home> findByHomeAddress(String homeAddress) {
+    public List<HomeListDto> findByHomeAddress(String homeAddress) {
         try {
             log.info("HomeService find by home address Homes(homeAddress: {}) start", homeAddress);
-            return homeRepository.findByHomeAddressContaining(homeAddress);
+            return homeListToHomeListDto(homeRepository.findByHomeAddressContaining(homeAddress));
         } catch (Exception e) {
             log.error("HomeService find by home address Homes failure, error: {}", e.getMessage());
             return null;
         } finally {
             log.info("HomeService find by home address Homes end");
         }
+    }
+
+    public List<HomeListDto> homeListToHomeListDto(List<Home> homes) {
+        List<HomeListDto> homeListDtos = new ArrayList<>();
+        log.info("prepare find all home facilities");
+        homes.forEach(home -> {
+            List<Long> homeFacilities = new ArrayList<>();
+            log.info("find home facilities id: {}", home.getId());
+            homeFacilityTableRepository.findByHomeId(home.getId()).forEach(homeFacilityTable -> {
+                homeFacilities.add(homeFacilityTable.getHomeFacility().getId());
+            });
+            homeListDtos.add(HomeListDto.builder()
+                    .homeId(home.getId())
+                    .homeName(home.getHomeName())
+                    .homeAddress(home.getHomeAddress())
+                    .coordinateX(home.getCoordinateX())
+                    .coordinateY(home.getCoordinateY())
+                    .homeCategoryId(home.getHomeCategory().getId())
+                    .image(homeImageTableRepository.findByHomeId(home.getId()).get(0).getImage().getImageName())
+                    .homeFacilities(homeFacilities)
+                    .maxHeadCount(home.getMaxHeadCount())
+                    .headCount(home.getHeadCount())
+                    .build());
+        });
+        return homeListDtos;
     }
 }

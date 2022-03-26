@@ -3,6 +3,7 @@ package line2.line2_back.home.model;
 import line2.line2_back.homeCategory.model.HomeCategory;
 import line2.line2_back.user.model.User;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -29,4 +30,6 @@ public class Home {
     @JoinColumn(name = "user_id")
     private User user;
     private String homeZipCode;
+    private int maxHeadCount;
+    private int headCount;
 }

@@ -1,7 +1,7 @@
 package line2.line2_back.home.controller;
 
-import line2.line2_back.home.model.Home;
 import line2.line2_back.home.model.HomeDto;
+import line2.line2_back.home.model.HomeListDto;
 import line2.line2_back.home.service.HomeService;
 import line2.line2_back.systemMessage.SystemMessage;
 import lombok.RequiredArgsConstructor;
@@ -68,7 +68,7 @@ public class HomeControllerImpl implements HomeController {
 
     @Override
     @GetMapping("/v1/home/list")
-    public List<Home> findAll() {
+    public List<HomeListDto> findAll() {
         try {
             log.info("HomeController find all Homes start");
             return homeService.findAll();
@@ -99,7 +99,7 @@ public class HomeControllerImpl implements HomeController {
 
     @Override
     @GetMapping("/v1/home/find/{homeAddress}")
-    public List<Home> findByHomeAddress(@PathVariable String homeAddress) {
+    public List<HomeListDto> findByHomeAddress(@PathVariable String homeAddress) {
         try {
             log.info("HomeController find by home address Homes(homeAddress: {}) start", homeAddress);
             return homeService.findByHomeAddress(homeAddress);

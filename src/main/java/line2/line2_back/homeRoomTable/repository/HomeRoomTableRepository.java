@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface HomeRoomTableRepository extends JpaRepository<HomeRoomTable, Long> {
     List<HomeRoomTable> findByHomeId(Long id);
+
+    HomeRoomTable findByRoomId(Long id);
 }

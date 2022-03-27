@@ -9,9 +9,4 @@ public interface RoomController {
     Room edit(Room room);
 
     void delete(Long id);
-
-    SystemMessage addHeadCount(Long id);
-
-    SystemMessage subHeadCount(Long id);
-
 }

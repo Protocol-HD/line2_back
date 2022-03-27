@@ -102,12 +102,10 @@ public class HomeServiceImpl implements HomeService {
                                             .bedding(room.getBedding())
                                             .gender(room.getGender())
                                             .maxHeadCount(room.getMaxHeadCount())
-                                            .headCount(0)
                                             .build())
                             )
                             .build()
             );
-            home.setMaxHeadCount(home.getMaxHeadCount() + room.getMaxHeadCount());
         });
         return home;
     }
@@ -127,9 +125,6 @@ public class HomeServiceImpl implements HomeService {
                     .homeInformation(homeDto.getHomeInformation())
                     .user(userRepository.findById(homeDto.getUserId()).get())
                     .homeZipCode(homeDto.getHomeZipCode())
-                    .headCount(
-                            (homeDto.getHomeId() == null) ? 0 : homeRepository.findById(homeDto.getHomeId()).get().getHeadCount()
-                    )
                     .build());
 
             log.info("2. save home images");
@@ -331,8 +326,6 @@ public class HomeServiceImpl implements HomeService {
                     .homeCategoryId(home.getHomeCategory().getId())
                     .image(homeImageTableRepository.findByHomeId(home.getId()).get(0).getImage().getImageName())
                     .homeFacilities(homeFacilities)
-                    .maxHeadCount(home.getMaxHeadCount())
-                    .headCount(home.getHeadCount())
                     .build());
         });
         return homeListDtos;

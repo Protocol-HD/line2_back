@@ -55,38 +55,4 @@ public class RoomControllerImpl implements RoomController{
             log.info("RoomController delete by id Room end");
         }
     }
-
-    @Override
-    @PutMapping("/v1/room/add_head_count/{id}")
-    public SystemMessage addHeadCount(@PathVariable Long id) {
-        try {
-            log.info("RoomController add headcount Room(id: {}) start", id);
-            return roomService.addHeadCount(id);
-        } catch (Exception e) {
-            log.error("RoomController add headcount Room failure, error: {}", e.getMessage());
-            return SystemMessage.builder()
-                    .code(3)
-                    .message("인원 추가 실패")
-                    .build();
-        } finally {
-            log.info("RoomController add headcount Room end");
-        }
-    }
-
-    @Override
-    @PutMapping("/v1/room/sub_head_count/{id}")
-    public SystemMessage subHeadCount(@PathVariable Long id) {
-        try {
-            log.info("RoomController sub headcount Room(id: {}) start", id);
-            return roomService.subHeadCount(id);
-        } catch (Exception e) {
-            log.error("RoomController sub headcount Room failure, error: {}", e.getMessage());
-            return SystemMessage.builder()
-                    .code(3)
-                    .message("인원 빼기 실패")
-                    .build();
-        } finally {
-            log.info("RoomController sub headcount Room end");
-        }
-    }
 }

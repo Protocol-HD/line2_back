@@ -7,8 +7,4 @@ public interface RoomService {
     Room save(Room room);
 
     void deleteById(Long id);
-
-    SystemMessage addHeadCount(Long id);
-
-    SystemMessage subHeadCount(Long id);
 }

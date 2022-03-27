@@ -18,6 +18,4 @@ public class HomeListDto {
     private Long homeCategoryId;
     private String image;
     private List<Long> homeFacilities;
-    private int maxHeadCount;
-    private int headCount;
 }

@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,19 +25,33 @@ public class ReservationServiceImpl implements ReservationService {
     public SystemMessage add(ReservationDto reservationDto) {
         try {
             log.info("ReservationService add Reservation({}) start", reservationDto);
-            reservationRepository.save(Reservation.builder()
-                    .id(reservationDto.getReservationId())
-                    .home(homeRepository.findById(reservationDto.getHomeId()).get())
-                    .room(roomRepository.findById(reservationDto.getRoomId()).get())
-                    .user(userRepository.findById(reservationDto.getUserId()).get())
-                    .checkIn(reservationDto.getCheckIn())
-                    .checkOut(reservationDto.getCheckOut())
-                    .hostToGuest(reservationDto.getGuestToHost())
-                    .build());
-            return SystemMessage.builder()
-                    .code(1)
-                    .message("예약 성공")
-                    .build();
+            if (
+                    reservationRepository.findByRoomIdAndCheckOutGreaterThanAndCheckInLessThan(
+                            reservationDto.getRoomId(),
+                            reservationDto.getCheckIn(),
+                            reservationDto.getCheckOut()
+                    ).size() < roomRepository.findById(reservationDto.getRoomId()).get().getMaxHeadCount()
+            ) {
+                reservationRepository.save(Reservation.builder()
+                        .id(reservationDto.getReservationId())
+                        .home(homeRepository.findById(reservationDto.getHomeId()).get())
+                        .room(roomRepository.findById(reservationDto.getRoomId()).get())
+                        .user(userRepository.findById(reservationDto.getUserId()).get())
+                        .checkIn(reservationDto.getCheckIn())
+                        .checkOut(reservationDto.getCheckOut())
+                        .hostToGuest(reservationDto.getGuestToHost())
+                        .build());
+                return SystemMessage.builder()
+                        .code(1)
+                        .message("예약 성공")
+                        .build();
+            } else {
+                return SystemMessage.builder()
+                        .code(3)
+                        .message("예약 실패: 인원 초과")
+                        .build();
+            }
+
         } catch (Exception e) {
             log.error("ReservationService add Reservation failure, error: {}", e.getMessage());
             return SystemMessage.builder()
@@ -54,14 +67,28 @@ public class ReservationServiceImpl implements ReservationService {
     public SystemMessage edit(ReservationChangeDateDtoInput reservationChangeDateDtoInput) {
         try {
             log.info("ReservationService edit Reservation({}) start", reservationChangeDateDtoInput);
-            Reservation reservation = reservationRepository.findById(reservationChangeDateDtoInput.getReservationId()).get();
-            reservation.setCheckIn(reservationChangeDateDtoInput.getCheckIn());
-            reservation.setCheckOut(reservationChangeDateDtoInput.getCheckOut());
-            reservationRepository.save(reservation);
-            return SystemMessage.builder()
-                    .code(1)
-                    .message("예약 변경 성공")
-                    .build();
+            Long roomId = reservationRepository.findById(reservationChangeDateDtoInput.getReservationId()).get().getRoom().getId();
+            if (
+                    reservationRepository.findByRoomIdAndCheckOutGreaterThanAndCheckInLessThan(
+                            roomId,
+                            reservationChangeDateDtoInput.getCheckIn(),
+                            reservationChangeDateDtoInput.getCheckOut()
+                    ).size() < roomRepository.findById(roomId).get().getMaxHeadCount()
+            ) {
+                Reservation reservation = reservationRepository.findById(reservationChangeDateDtoInput.getReservationId()).get();
+                reservation.setCheckIn(reservationChangeDateDtoInput.getCheckIn());
+                reservation.setCheckOut(reservationChangeDateDtoInput.getCheckOut());
+                reservationRepository.save(reservation);
+                return SystemMessage.builder()
+                        .code(1)
+                        .message("예약 변경 성공")
+                        .build();
+            } else {
+                return SystemMessage.builder()
+                        .code(3)
+                        .message("예약 변경 실패: 인원 초과")
+                        .build();
+            }
         } catch (Exception e) {
             log.error("ReservationService edit Reservation failure, error: {}", e.getMessage());
             return SystemMessage.builder()

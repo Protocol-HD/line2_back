@@ -89,25 +89,29 @@ public class HomeServiceImpl implements HomeService {
         });
     }
 
-    public Home HomeRoomAdd(List<Room> rooms, Home home) {
-        rooms.forEach(room -> {
-            homeRoomTableRepository.save(
-                    HomeRoomTable.builder()
-                            .home(home)
-                            .room(roomRepository.save(
-                                    Room.builder()
-                                            .roomName(room.getRoomName())
-                                            .singleBed(room.getSingleBed())
-                                            .doubleBed(room.getDoubleBed())
-                                            .bedding(room.getBedding())
-                                            .gender(room.getGender())
-                                            .maxHeadCount(room.getMaxHeadCount())
-                                            .build())
-                            )
-                            .build()
-            );
+    public void HomeRoomAdd(HomeDto homeDto, Home home) {
+        List<Long> newRooms = new ArrayList<>();
+
+        homeDto.getRooms().forEach(room -> {
+            if (room.getId() != null) {
+                roomRepository.save(room);
+                newRooms.add(room.getId());
+            } else {
+                Room newRoom = roomRepository.save(room);
+                homeRoomTableRepository.save(HomeRoomTable.builder()
+                        .home(homeRepository.findById(home.getId()).get())
+                        .room(newRoom)
+                        .build());
+                newRooms.add(newRoom.getId());
+            }
         });
-        return home;
+
+        homeRoomTableRepository.findByHomeId(homeDto.getHomeId()).forEach(homeRoom -> {
+            if (!newRooms.contains(homeRoom.getRoom().getId())) {
+                homeRoomTableRepository.delete(homeRoomTableRepository.findByRoomId(homeRoom.getRoom().getId()));
+                roomRepository.deleteById(homeRoom.getRoom().getId());
+            }
+        });
     }
 
     @Override
@@ -133,8 +137,8 @@ public class HomeServiceImpl implements HomeService {
             HomePolicyAdd(homeDto.getHomePolicies(), homeDto.getHomePolicyCustom(), home);
             log.info("4. save home facilities");
             HomeFacilityAdd(homeDto.getHomeFacilities(), home);
-            log.info("5. save home rooms");
-            homeRepository.save(HomeRoomAdd(homeDto.getRooms(), home));
+            log.info("5. save/edit home rooms");
+            HomeRoomAdd(homeDto, home);
             return SystemMessage.builder()
                     .code(1)
                     .message("숙소 등록 성공")
@@ -160,8 +164,6 @@ public class HomeServiceImpl implements HomeService {
             HomePolicyDelete(homeDto.getHomeId());
             log.info("3. delete home facilities");
             HomeFacilityDelete(homeDto.getHomeId());
-            log.info("4. delete home rooms");
-            HomeRoomDelete(homeDto.getHomeId());
             add(homeDto);
             return SystemMessage.builder()
                     .code(1)

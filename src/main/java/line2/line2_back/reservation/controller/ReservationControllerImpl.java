@@ -233,4 +233,21 @@ public class ReservationControllerImpl implements ReservationController {
             log.info("ReservationController head count Reservation end");
         }
     }
+
+    @Override
+    @GetMapping("/v1/reservation/delete_room/{id}")
+    public SystemMessage isEnableDeleteRoom(@PathVariable Long id) {
+        try {
+            log.info("ReservationController find exist next Reservation(id: {}) start", id);
+            return reservationService.isEnableDeleteRoom(id);
+        } catch (Exception e) {
+            log.error("ReservationController find exist next Reservation failure, error: {}", e.getMessage());
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("객실 삭제 검증 실패")
+                    .build();
+        } finally {
+            log.info("ReservationController find exist next Reservation end");
+        }
+    }
 }

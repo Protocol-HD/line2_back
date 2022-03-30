@@ -18,6 +18,7 @@ import line2.line2_back.homeRoomTable.model.HomeRoomTable;
 import line2.line2_back.homeRoomTable.repository.HomeRoomTableRepository;
 import line2.line2_back.image.model.Image;
 import line2.line2_back.image.repository.ImageRepository;
+import line2.line2_back.reservation.repository.ReservationRepository;
 import line2.line2_back.room.model.Room;
 import line2.line2_back.room.repository.RoomRepository;
 import line2.line2_back.systemMessage.SystemMessage;
@@ -44,6 +45,7 @@ public class HomeServiceImpl implements HomeService {
     private final RoomRepository roomRepository;
     private final HomeRoomTableRepository homeRoomTableRepository;
     private final UserRepository userRepository;
+    private final ReservationRepository reservationRepository;
 
     public void HomeImageAdd(List<String> images, Home home) {
         images.forEach(image -> {
@@ -108,6 +110,7 @@ public class HomeServiceImpl implements HomeService {
 
         homeRoomTableRepository.findByHomeId(homeDto.getHomeId()).forEach(homeRoom -> {
             if (!newRooms.contains(homeRoom.getRoom().getId())) {
+                reservationRepository.deleteAll(reservationRepository.findByRoomId(homeRoom.getRoom().getId()));
                 homeRoomTableRepository.delete(homeRoomTableRepository.findByRoomId(homeRoom.getRoom().getId()));
                 roomRepository.deleteById(homeRoom.getRoom().getId());
             }
@@ -278,9 +281,11 @@ public class HomeServiceImpl implements HomeService {
             HomePolicyDelete(id);
             log.info("3. delete home facilities");
             HomeFacilityDelete(id);
-            log.info("4. delete home rooms");
+            log.info("4. delete reservation rooms");
+            reservationRepository.deleteAll(reservationRepository.findByHomeId(id));
+            log.info("5. delete home rooms");
             HomeRoomDelete(id);
-            log.info("5. delete home");
+            log.info("6. delete home");
             homeRepository.deleteById(id);
             return SystemMessage.builder()
                     .code(1)

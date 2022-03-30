@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -228,6 +229,31 @@ public class ReservationServiceImpl implements ReservationService {
             return -1;
         } finally {
             log.info("ReservationService head count Reservation end");
+        }
+    }
+
+    @Override
+    public SystemMessage isEnableDeleteRoom(Long id) {
+        try {
+            log.info("ReservationService find exist next Reservation(id: {}) start", id);
+            if (reservationRepository.findByRoomIdAndCheckOutGreaterThanAndCheckInGreaterThan(id, new Date(), new Date()).size() == 0) {
+                return SystemMessage.builder()
+                        .code(1)
+                        .message("객실 삭제 가능")
+                        .build();
+            }
+            return SystemMessage.builder()
+                    .code(3)
+                    .message("객실 삭제 불가: 예정된 예약이 존재함")
+                    .build();
+        } catch (Exception e) {
+            log.error("ReservationService find exist next Reservation failure, error: {}", e.getMessage());
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("객실 삭제 검증 실패")
+                    .build();
+        } finally {
+            log.info("ReservationService find exist next Reservation end");
         }
     }
 }

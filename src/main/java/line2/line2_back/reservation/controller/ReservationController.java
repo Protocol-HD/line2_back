@@ -34,4 +34,6 @@ public interface ReservationController {
     SystemMessage denyReservation(ReservationDenyInput reservationDenyInput);
 
     int headCount(ReservationHeadCountDto reservationHeadCountDto);
+
+    SystemMessage isEnableDeleteRoom(Long id);
 }

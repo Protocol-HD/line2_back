@@ -11,7 +11,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservationDenyInput {
+public class ReservationCheckInOutInput {
     private Long reservationId;
-    private String hostToGuest;
+    private String message;
 }

@@ -31,7 +31,9 @@ public class Reservation {
     private User user;
     private Date checkIn;
     private Date checkOut;
-    private String hostToGuest;
+    private String checkInMessage;
+    private String checkOutMessage;
+    private String denyMessage;
     private String guestToHost;
     @ColumnDefault("false")
     private boolean checkInStatus;

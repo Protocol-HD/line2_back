@@ -112,6 +112,54 @@ public class ReservationControllerImpl implements ReservationController {
     }
 
     @Override
+    @GetMapping("/v1/reservation/home/before_check_in/{id}")
+    public List<Reservation> findByHomeIdBeforeCheckIn(@PathVariable Long id) {
+        try {
+            log.info("ReservationController find by home before check in Reservation(id: {}) start", id);
+            List<Reservation> reservations = new ArrayList<>();
+            reservations.addAll(reservationService.findByHomeIdCheckInOut(id, false, false, false));
+            reservations.addAll(reservationService.findByHomeIdCheckInOut(id, false, false, true));
+            return reservations;
+        } catch (Exception e) {
+            log.error("ReservationController find by home before check in Reservation failure, error: {}",
+                    e.getMessage());
+            return null;
+        } finally {
+            log.info("ReservationController find by home before check in Reservation end");
+        }
+    }
+
+    @Override
+    @GetMapping("/v1/reservation/home/before_check_out/{id}")
+    public List<Reservation> findByHomeIdBeforeCheckOut(@PathVariable Long id) {
+        try {
+            log.info("ReservationController find by home before check out Reservation(id: {}) start", id);
+            return reservationService.findByHomeIdCheckInOut(id, true, false, false);
+        } catch (Exception e) {
+            log.error("ReservationController find by home before check out Reservation failure, error: {}",
+                    e.getMessage());
+            return null;
+        } finally {
+            log.info("ReservationController find by home before check out Reservation end");
+        }
+    }
+
+    @Override
+    @GetMapping("/v1/reservation/hoome/after_check_out/{id}")
+    public List<Reservation> findByHomeIdAfterCheckOut(@PathVariable Long id) {
+        try {
+            log.info("ReservationController find by home after check out Reservation(id: {}) start", id);
+            return reservationService.findByHomeIdCheckInOut(id, true, true, false);
+        } catch (Exception e) {
+            log.error("ReservationController find by home after check out Reservation failure, error: {}",
+                    e.getMessage());
+            return null;
+        } finally {
+            log.info("ReservationController find by home after check out Reservation end");
+        }
+    }
+
+    @Override
     @GetMapping("/v1/reservation/user/before_check_in/{id}")
     public List<Reservation> findByUserIdBeforeCheckIn(@PathVariable Long id) {
         try {
@@ -121,7 +169,8 @@ public class ReservationControllerImpl implements ReservationController {
             reservations.addAll(reservationService.findByUserIdCheckInOut(id, false, false, true));
             return reservations;
         } catch (Exception e) {
-            log.error("ReservationController find by user before check in Reservation failure, error: {}", e.getMessage());
+            log.error("ReservationController find by user before check in Reservation failure, error: {}",
+                    e.getMessage());
             return null;
         } finally {
             log.info("ReservationController find by user before check in Reservation end");
@@ -135,7 +184,8 @@ public class ReservationControllerImpl implements ReservationController {
             log.info("ReservationController find by user before check out Reservation(id: {}) start", id);
             return reservationService.findByUserIdCheckInOut(id, true, false, false);
         } catch (Exception e) {
-            log.error("ReservationController find by user before check out Reservation failure, error: {}", e.getMessage());
+            log.error("ReservationController find by user before check out Reservation failure, error: {}",
+                    e.getMessage());
             return null;
         } finally {
             log.info("ReservationController find by user before check out Reservation end");
@@ -149,7 +199,8 @@ public class ReservationControllerImpl implements ReservationController {
             log.info("ReservationController find by user after check out Reservation(id: {}) start", id);
             return reservationService.findByUserIdCheckInOut(id, true, true, false);
         } catch (Exception e) {
-            log.error("ReservationController find by user after check out Reservation failure, error: {}", e.getMessage());
+            log.error("ReservationController find by user after check out Reservation failure, error: {}",
+                    e.getMessage());
             return null;
         } finally {
             log.info("ReservationController find by user after check out Reservation end");
@@ -162,7 +213,8 @@ public class ReservationControllerImpl implements ReservationController {
             log.info("ReservationController find by user after check out Reservation(id: {}) start", id);
             return reservationService.findByUserIdCheckInOut(id, true, true, false);
         } catch (Exception e) {
-            log.error("ReservationController find by user after check out Reservation failure, error: {}", e.getMessage());
+            log.error("ReservationController find by user after check out Reservation failure, error: {}",
+                    e.getMessage());
             return null;
         } finally {
             log.info("ReservationController find by user after check out Reservation end");
@@ -170,11 +222,13 @@ public class ReservationControllerImpl implements ReservationController {
     }
 
     @Override
-    @PutMapping("/v1/reservation/accept_check_in/{id}")
-    public SystemMessage acceptCheckIn(@PathVariable Long id) {
+    @PutMapping("/v1/reservation/accept_check_in")
+    public SystemMessage acceptCheckIn(@RequestBody ReservationCheckInOutInput reservationCheckInOutInput) {
         try {
-            log.info("ReservationController accept check in Reservation(id: {}) start", id);
-            return reservationService.changeReservationStatus(id, true, false);
+            log.info("ReservationController accept check in Reservation({}) start", reservationCheckInOutInput);
+            return reservationService.changeReservationStatus(reservationCheckInOutInput.getReservationId(), true,
+                    false, reservationCheckInOutInput.getMessage(),
+                    reservationService.findById(reservationCheckInOutInput.getReservationId()).getCheckOutMessage());
         } catch (Exception e) {
             log.error("ReservationController accept check in Reservation failure, error: {}", e.getMessage());
             return SystemMessage.builder()
@@ -187,11 +241,13 @@ public class ReservationControllerImpl implements ReservationController {
     }
 
     @Override
-    @PutMapping("/v1/reservation/accept_check_out/{id}")
-    public SystemMessage acceptCheckOut(@PathVariable Long id) {
+    @PutMapping("/v1/reservation/accept_check_out")
+    public SystemMessage acceptCheckOut(@RequestBody ReservationCheckInOutInput reservationCheckInOutInput) {
         try {
-            log.info("ReservationController accept check out Reservation(id: {}) start", id);
-            return reservationService.changeReservationStatus(id, true, true);
+            log.info("ReservationController accept check out Reservation({}) start", reservationCheckInOutInput);
+            return reservationService.changeReservationStatus(reservationCheckInOutInput.getReservationId(), true, true,
+                    reservationService.findById(reservationCheckInOutInput.getReservationId()).getCheckInMessage(),
+                    reservationCheckInOutInput.getMessage());
         } catch (Exception e) {
             log.error("ReservationController accept check out Reservation failure, error: {}", e.getMessage());
             return SystemMessage.builder()
@@ -205,7 +261,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @PutMapping("/v1/reservation/deny")
-    public SystemMessage denyReservation(@RequestBody ReservationDenyInput reservationDenyInput) {
+    public SystemMessage denyReservation(@RequestBody ReservationCheckInOutInput reservationDenyInput) {
         try {
             log.info("ReservationController deny Reservation({}) start", reservationDenyInput);
             return reservationService.denyReservation(reservationDenyInput);

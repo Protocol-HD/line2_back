@@ -18,11 +18,13 @@ public interface ReservationService {
 
     List<Reservation> findByHomeId(Long id);
 
+    List<Reservation> findByHomeIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus);
+
     List<Reservation> findByUserIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus);
 
-    SystemMessage changeReservationStatus(Long id, boolean checkInStatus, boolean checkOutStatus);
+    SystemMessage changeReservationStatus(Long id, boolean checkInStatus, boolean checkOutStatus, String checkInMessage, String checkOutMessage);
 
-    SystemMessage denyReservation(ReservationDenyInput reservationDenyInput);
+    SystemMessage denyReservation(ReservationCheckInOutInput reservationDenyInput);
 
     int headCount(ReservationHeadCountDto reservationHeadCountDto);
 

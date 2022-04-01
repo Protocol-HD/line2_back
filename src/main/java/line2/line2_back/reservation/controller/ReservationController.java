@@ -3,7 +3,6 @@ package line2.line2_back.reservation.controller;
 import line2.line2_back.reservation.model.*;
 import line2.line2_back.systemMessage.SystemMessage;
 
-import java.util.Date;
 import java.util.List;
 
 public interface ReservationController {
@@ -19,6 +18,12 @@ public interface ReservationController {
 
     List<Reservation> findByHomeId(Long id);
 
+    List<Reservation> findByHomeIdBeforeCheckIn(Long id);
+
+    List<Reservation> findByHomeIdBeforeCheckOut(Long id);
+
+    List<Reservation> findByHomeIdAfterCheckOut(Long id);
+    
     List<Reservation> findByUserIdBeforeCheckIn(Long id);
 
     List<Reservation> findByUserIdBeforeCheckOut(Long id);
@@ -27,11 +32,11 @@ public interface ReservationController {
 
     List<Reservation> findByUserDenyReservation(Long id);
 
-    SystemMessage acceptCheckIn(Long id);
+    SystemMessage acceptCheckIn(ReservationCheckInOutInput reservationCheckInOutInput);
 
-    SystemMessage acceptCheckOut(Long id);
+    SystemMessage acceptCheckOut(ReservationCheckInOutInput reservationCheckInOutInput);
 
-    SystemMessage denyReservation(ReservationDenyInput reservationDenyInput);
+    SystemMessage denyReservation(ReservationCheckInOutInput reservationDenyInput);
 
     int headCount(ReservationHeadCountDto reservationHeadCountDto);
 

@@ -1,7 +1,5 @@
 package line2.line2_back;
 
-import com.mysql.cj.xdevapi.DbDoc;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

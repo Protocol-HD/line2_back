@@ -1,14 +1,14 @@
 package line2.line2_back.reservation.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Date;
 
 @Getter
 @ToString
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReservationHeadCountDto {
     private Long roomId;
     private Date checkIn;

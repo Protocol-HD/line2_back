@@ -3,7 +3,6 @@ package line2.line2_back.reservation.service;
 import line2.line2_back.reservation.model.*;
 import line2.line2_back.systemMessage.SystemMessage;
 
-import java.util.Date;
 import java.util.List;
 
 public interface ReservationService {

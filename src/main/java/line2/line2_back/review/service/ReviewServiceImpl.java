@@ -1,11 +1,11 @@
 package line2.line2_back.review.service;
 
 import line2.line2_back.home.repository.HomeRepository;
+import line2.line2_back.restApi.RestApiService;
 import line2.line2_back.review.model.Review;
 import line2.line2_back.review.model.ReviewDtoInput;
 import line2.line2_back.review.repository.ReviewRepository;
 import line2.line2_back.systemMessage.SystemMessage;
-import line2.line2_back.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final HomeRepository homeRepository;
-    private final UserRepository userRepository;
+    private final RestApiService restApiService;
 
     @Override
     public SystemMessage add(ReviewDtoInput reviewDtoInput) {
@@ -27,7 +27,7 @@ public class ReviewServiceImpl implements ReviewService {
                     .review(reviewDtoInput.getReview())
                     .star(reviewDtoInput.getStar())
                     .home(homeRepository.findById(reviewDtoInput.getHomeId()).get())
-                    .user(userRepository.findById(reviewDtoInput.getUserId()).get())
+                    .user(restApiService.getUserById(reviewDtoInput.getUserId()))
                     .build());
             return SystemMessage.builder()
                     .code(1)
@@ -53,7 +53,7 @@ public class ReviewServiceImpl implements ReviewService {
                     .review(reviewDtoInput.getReview())
                     .star(reviewDtoInput.getStar())
                     .home(homeRepository.findById(reviewDtoInput.getHomeId()).get())
-                    .user(userRepository.findById(reviewDtoInput.getUserId()).get())
+                    .user(restApiService.getUserById(reviewDtoInput.getUserId()))
                     .build());
             return SystemMessage.builder()
                     .code(1)

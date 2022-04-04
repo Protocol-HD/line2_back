@@ -1,8 +1,8 @@
 package line2.line2_back.reservation.model;
 
 import line2.line2_back.home.model.Home;
+import line2.line2_back.restApi.models.User;
 import line2.line2_back.room.model.Room;
-import line2.line2_back.user.model.User;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 

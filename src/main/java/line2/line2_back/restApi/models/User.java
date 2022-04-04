@@ -1,4 +1,4 @@
-package line2.line2_back.user.model;
+package line2.line2_back.restApi.models;
 
 import lombok.*;
 
@@ -25,4 +25,5 @@ public class User {
     private String userPhoneNumber;
     private String userEmail;
     private String userImg;
+    private boolean host;
 }

@@ -19,10 +19,10 @@ import line2.line2_back.homeRoomTable.repository.HomeRoomTableRepository;
 import line2.line2_back.image.model.Image;
 import line2.line2_back.image.repository.ImageRepository;
 import line2.line2_back.reservation.repository.ReservationRepository;
+import line2.line2_back.restApi.RestApiService;
 import line2.line2_back.room.model.Room;
 import line2.line2_back.room.repository.RoomRepository;
 import line2.line2_back.systemMessage.SystemMessage;
-import line2.line2_back.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -44,8 +44,8 @@ public class HomeServiceImpl implements HomeService {
     private final HomeFacilityTableRepository homeFacilityTableRepository;
     private final RoomRepository roomRepository;
     private final HomeRoomTableRepository homeRoomTableRepository;
-    private final UserRepository userRepository;
     private final ReservationRepository reservationRepository;
+    private final RestApiService restApiService;
 
     public void HomeImageAdd(List<String> images, Home home) {
         images.forEach(image -> {
@@ -130,7 +130,7 @@ public class HomeServiceImpl implements HomeService {
                     .coordinateY(homeDto.getCoordinateY())
                     .homeCategory(homeCategoryRepository.findById(homeDto.getHomeCategoryId()).get())
                     .homeInformation(homeDto.getHomeInformation())
-                    .user(userRepository.findById(homeDto.getUserId()).get())
+                    .user(restApiService.getUserById(homeDto.getUserId()))
                     .homeZipCode(homeDto.getHomeZipCode())
                     .build());
 

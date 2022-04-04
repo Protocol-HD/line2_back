@@ -3,9 +3,9 @@ package line2.line2_back.reservation.service;
 import line2.line2_back.home.repository.HomeRepository;
 import line2.line2_back.reservation.model.*;
 import line2.line2_back.reservation.repository.ReservationRepository;
+import line2.line2_back.restApi.RestApiService;
 import line2.line2_back.room.repository.RoomRepository;
 import line2.line2_back.systemMessage.SystemMessage;
-import line2.line2_back.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final HomeRepository homeRepository;
     private final RoomRepository roomRepository;
-    private final UserRepository userRepository;
+    private final RestApiService restApiService;
 
     @Override
     public SystemMessage add(ReservationDto reservationDto) {
@@ -35,7 +35,7 @@ public class ReservationServiceImpl implements ReservationService {
                         .id(reservationDto.getReservationId())
                         .home(homeRepository.findById(reservationDto.getHomeId()).get())
                         .room(roomRepository.findById(reservationDto.getRoomId()).get())
-                        .user(userRepository.findById(reservationDto.getUserId()).get())
+                        .user(restApiService.getUserById(reservationDto.getUserId()))
                         .checkIn(reservationDto.getCheckIn())
                         .checkOut(reservationDto.getCheckOut())
                         .guestToHost(reservationDto.getGuestToHost())

@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class RestApiService {
-    String preUrl = "http://openjdk2:8080";
+    String preUrl = "http://192.168.0.59:8080";
     // String preUrl = "http://localhost:9090";
     public User getUserById(Long id) {
         RestTemplate restTemplate = new RestTemplate();

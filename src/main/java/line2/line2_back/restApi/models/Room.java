@@ -1,4 +1,4 @@
-package line2.line2_back.room.model;
+package line2.line2_back.restApi.models;
 
 import lombok.*;
 

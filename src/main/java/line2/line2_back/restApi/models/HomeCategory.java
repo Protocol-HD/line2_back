@@ -1,4 +1,4 @@
-package line2.line2_back.homePolicy.model;
+package line2.line2_back.restApi.models;
 
 import lombok.*;
 
@@ -14,10 +14,9 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class HomePolicy {
+public class HomeCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int policyType;
-    private String homePolicy;
+    private String homeCategoryName;
 }

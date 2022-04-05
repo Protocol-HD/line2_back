@@ -1,6 +1,5 @@
 package line2.line2_back.review.service;
 
-import line2.line2_back.home.repository.HomeRepository;
 import line2.line2_back.restApi.RestApiService;
 import line2.line2_back.review.model.Review;
 import line2.line2_back.review.model.ReviewDtoInput;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
-    private final HomeRepository homeRepository;
     private final RestApiService restApiService;
 
     @Override
@@ -26,7 +24,7 @@ public class ReviewServiceImpl implements ReviewService {
                     .id(reviewDtoInput.getReviewId())
                     .review(reviewDtoInput.getReview())
                     .star(reviewDtoInput.getStar())
-                    .home(homeRepository.findById(reviewDtoInput.getHomeId()).get())
+                    .home(restApiService.getHomeById(reviewDtoInput.getHomeId()))
                     .user(restApiService.getUserById(reviewDtoInput.getUserId()))
                     .build());
             return SystemMessage.builder()
@@ -52,7 +50,7 @@ public class ReviewServiceImpl implements ReviewService {
                     .id(reviewDtoInput.getReviewId())
                     .review(reviewDtoInput.getReview())
                     .star(reviewDtoInput.getStar())
-                    .home(homeRepository.findById(reviewDtoInput.getHomeId()).get())
+                    .home(restApiService.getHomeById(reviewDtoInput.getHomeId()))
                     .user(restApiService.getUserById(reviewDtoInput.getUserId()))
                     .build());
             return SystemMessage.builder()

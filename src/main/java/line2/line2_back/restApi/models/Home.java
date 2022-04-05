@@ -1,7 +1,5 @@
-package line2.line2_back.home.model;
+package line2.line2_back.restApi.models;
 
-import line2.line2_back.homeCategory.model.HomeCategory;
-import line2.line2_back.restApi.models.User;
 import lombok.*;
 
 import javax.persistence.*;

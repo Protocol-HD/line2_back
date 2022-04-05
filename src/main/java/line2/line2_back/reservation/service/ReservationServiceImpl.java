@@ -1,10 +1,8 @@
 package line2.line2_back.reservation.service;
 
-import line2.line2_back.home.repository.HomeRepository;
 import line2.line2_back.reservation.model.*;
 import line2.line2_back.reservation.repository.ReservationRepository;
 import line2.line2_back.restApi.RestApiService;
-import line2.line2_back.room.repository.RoomRepository;
 import line2.line2_back.systemMessage.SystemMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
-    private final HomeRepository homeRepository;
-    private final RoomRepository roomRepository;
     private final RestApiService restApiService;
 
     @Override
@@ -30,11 +26,11 @@ public class ReservationServiceImpl implements ReservationService {
                     reservationDto.getRoomId(),
                     reservationDto.getCheckIn(),
                     reservationDto.getCheckOut())
-                    .size() < roomRepository.findById(reservationDto.getRoomId()).get().getMaxHeadCount()) {
+                    .size() < restApiService.getRoomById(reservationDto.getRoomId()).getMaxHeadCount()) {
                 reservationRepository.save(Reservation.builder()
                         .id(reservationDto.getReservationId())
-                        .home(homeRepository.findById(reservationDto.getHomeId()).get())
-                        .room(roomRepository.findById(reservationDto.getRoomId()).get())
+                        .home(restApiService.getHomeById(reservationDto.getHomeId()))
+                        .room(restApiService.getRoomById(reservationDto.getRoomId()))
                         .user(restApiService.getUserById(reservationDto.getUserId()))
                         .checkIn(reservationDto.getCheckIn())
                         .checkOut(reservationDto.getCheckOut())
@@ -72,7 +68,7 @@ public class ReservationServiceImpl implements ReservationService {
                     roomId,
                     reservationChangeDateDtoInput.getCheckIn(),
                     reservationChangeDateDtoInput.getCheckOut())
-                    .size() < roomRepository.findById(roomId).get().getMaxHeadCount()) {
+                    .size() < restApiService.getRoomById(roomId).getMaxHeadCount()) {
                 Reservation reservation = reservationRepository
                         .findById(reservationChangeDateDtoInput.getReservationId()).get();
                 reservation.setCheckIn(reservationChangeDateDtoInput.getCheckIn());
@@ -155,6 +151,19 @@ public class ReservationServiceImpl implements ReservationService {
             return null;
         } finally {
             log.info("ReservationService find by home id Reservation end");
+        }
+    }
+
+    @Override
+    public List<Reservation> findByRoomId(Long id) {
+        try {
+            log.info("ReservationService find by room id Reservation(id: {}) start", id);
+            return reservationRepository.findByRoomId(id);
+        } catch (Exception e) {
+            log.error("ReservationService find by room id Reservation failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("ReservationService find by room id Reservation end");
         }
     }
 

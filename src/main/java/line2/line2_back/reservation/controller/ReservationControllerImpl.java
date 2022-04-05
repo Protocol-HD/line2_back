@@ -112,6 +112,20 @@ public class ReservationControllerImpl implements ReservationController {
     }
 
     @Override
+    @GetMapping("/v1/reservation/room/{id}")
+    public List<Reservation> findByRoomId(Long id) {
+        try {
+            log.info("ReservationController find by room id Reservation(id: {}) start", id);
+            return reservationService.findByRoomId(id);
+        } catch (Exception e) {
+            log.error("ReservationController find by room id Reservation failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("ReservationController find by room id Reservation end");
+        }
+    }
+
+    @Override
     @GetMapping("/v1/reservation/home/before_check_in/{id}")
     public List<Reservation> findByHomeIdBeforeCheckIn(@PathVariable Long id) {
         try {

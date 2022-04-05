@@ -18,6 +18,8 @@ public interface ReservationService {
 
     List<Reservation> findByHomeId(Long id);
 
+    List<Reservation> findByRoomId(Long id);
+
     List<Reservation> findByHomeIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus);
 
     List<Reservation> findByUserIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus);

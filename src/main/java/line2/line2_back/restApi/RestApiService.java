@@ -12,9 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class RestApiService {
+    String preUrl = "http://openjdk2:9090";
+    // String preUrl = "http://localhost:9090";
     public User getUserById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://openjdk2:9090/manage/v1/user/" + Long.toString(id);
+        String url = preUrl + "/manage/v1/user/" + Long.toString(id);
         // String url = "http://localhost:9090/manage/v1/user/" + Long.toString(id);
         ResponseEntity<User> response = restTemplate.getForEntity(url, User.class);
         log.info("{}", response.getBody());

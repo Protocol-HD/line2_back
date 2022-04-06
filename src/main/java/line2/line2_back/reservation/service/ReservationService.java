@@ -20,13 +20,15 @@ public interface ReservationService {
 
     List<Reservation> findByRoomId(Long id);
 
-    List<Reservation> findByHomeIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus);
+    List<Reservation> findByHomeIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
 
-    List<Reservation> findByUserIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus);
+    List<Reservation> findByUserIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
 
     SystemMessage changeReservationStatus(Long id, boolean checkInStatus, boolean checkOutStatus, String checkInMessage, String checkOutMessage);
 
-    SystemMessage denyReservation(ReservationCheckInOutInput reservationDenyInput);
+    SystemMessage denyReservation(ReservationCheckInOutInput reservationCheckInOutInput);
+
+    SystemMessage cancelReservation(ReservationCheckInOutInput reservationCheckInOutInput);
 
     int headCount(ReservationHeadCountDto reservationHeadCountDto);
 

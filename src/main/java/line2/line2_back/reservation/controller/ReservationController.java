@@ -25,6 +25,10 @@ public interface ReservationController {
     List<Reservation> findByHomeIdBeforeCheckOut(Long id);
 
     List<Reservation> findByHomeIdAfterCheckOut(Long id);
+
+    List<Reservation> findByHomeDenyReservation(Long id);
+
+    List<Reservation> findByHomeCancelReservation(Long id);
     
     List<Reservation> findByUserIdBeforeCheckIn(Long id);
 
@@ -34,11 +38,15 @@ public interface ReservationController {
 
     List<Reservation> findByUserDenyReservation(Long id);
 
+    List<Reservation> findByUserCancelReservation(Long id);
+
     SystemMessage acceptCheckIn(ReservationCheckInOutInput reservationCheckInOutInput);
 
     SystemMessage acceptCheckOut(ReservationCheckInOutInput reservationCheckInOutInput);
 
-    SystemMessage denyReservation(ReservationCheckInOutInput reservationDenyInput);
+    SystemMessage denyReservation(ReservationCheckInOutInput reservationCheckInOutInput);
+
+    SystemMessage cancelReservation(ReservationCheckInOutInput reservationCheckInOutInput);
 
     int headCount(ReservationHeadCountDto reservationHeadCountDto);
 

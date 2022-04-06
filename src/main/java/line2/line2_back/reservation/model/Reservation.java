@@ -34,6 +34,7 @@ public class Reservation {
     private String checkInMessage;
     private String checkOutMessage;
     private String denyMessage;
+    private String cancelMessage;
     private String guestToHost;
     @ColumnDefault("false")
     private boolean checkInStatus;
@@ -41,4 +42,6 @@ public class Reservation {
     private boolean checkOutStatus;
     @ColumnDefault("false")
     private boolean denyStatus;
+    @ColumnDefault("false")
+    private boolean cancelStatus;
 }

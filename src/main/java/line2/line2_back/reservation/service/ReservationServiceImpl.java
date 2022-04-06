@@ -169,11 +169,11 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> findByHomeIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus,
-            boolean denyStatus) {
+            boolean denyStatus, boolean cancelStatus) {
         try {
             log.info("ReservationService find by home check in, out status Reservation(id: {}) start", id);
-            return reservationRepository.findByHomeIdAndCheckInStatusAndCheckOutStatusAndDenyStatus(id, checkInStatus,
-                    checkOutStatus, denyStatus);
+            return reservationRepository.findByHomeIdAndCheckInStatusAndCheckOutStatusAndDenyStatusAndCancelStatus(id, checkInStatus,
+                    checkOutStatus, denyStatus, cancelStatus);
         } catch (Exception e) {
             log.error("ReservationService find by home check in, out status Reservation failure, error: {}",
                     e.getMessage());
@@ -185,11 +185,11 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> findByUserIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus,
-            boolean denyStatus) {
+            boolean denyStatus, boolean cancelStatus) {
         try {
             log.info("ReservationService find by user check in, out status Reservation(id: {}) start", id);
-            return reservationRepository.findByUserIdAndCheckInStatusAndCheckOutStatusAndDenyStatus(id, checkInStatus,
-                    checkOutStatus, denyStatus);
+            return reservationRepository.findByUserIdAndCheckInStatusAndCheckOutStatusAndDenyStatusAndCancelStatus(id, checkInStatus,
+                    checkOutStatus, denyStatus, cancelStatus);
         } catch (Exception e) {
             log.error("ReservationService find by user check in, out status Reservation failure, error: {}",
                     e.getMessage());
@@ -244,6 +244,29 @@ public class ReservationServiceImpl implements ReservationService {
                     .build();
         } finally {
             log.info("ReservationService deny Reservation end");
+        }
+    }
+
+    @Override
+    public SystemMessage cancelReservation(ReservationCheckInOutInput reservationCheckInOutInput) {
+        try {
+            log.info("ReservationService cancel Reservation({}) start", reservationCheckInOutInput);
+            Reservation reservation = reservationRepository.findById(reservationCheckInOutInput.getReservationId()).get();
+            reservation.setCancelMessage(reservationCheckInOutInput.getMessage());
+            reservation.setCancelStatus(true);
+            reservationRepository.save(reservation);
+            return SystemMessage.builder()
+                    .code(1)
+                    .message("예약 취소 성공")
+                    .build();
+        } catch (Exception e) {
+            log.error("ReservationService cancel Reservation failure, error: {}", e.getMessage());
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("예약 취소 실패")
+                    .build();
+        } finally {
+            log.info("ReservationService cancel Reservation end");
         }
     }
 

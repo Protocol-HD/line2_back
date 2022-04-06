@@ -13,9 +13,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findByRoomId(Long id);
 
-    List<Reservation> findByUserIdAndCheckInStatusAndCheckOutStatusAndDenyStatus(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus);
+    List<Reservation> findByUserIdAndCheckInStatusAndCheckOutStatusAndDenyStatusAndCancelStatus(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
 
-    List<Reservation> findByHomeIdAndCheckInStatusAndCheckOutStatusAndDenyStatus(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus);
+    List<Reservation> findByHomeIdAndCheckInStatusAndCheckOutStatusAndDenyStatusAndCancelStatus(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
 
     List<Reservation> findByRoomIdAndCheckOutGreaterThanAndCheckInLessThan(Long id, Date checkIn, Date checkOut);
 

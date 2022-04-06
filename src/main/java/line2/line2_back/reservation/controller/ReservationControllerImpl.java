@@ -132,8 +132,6 @@ public class ReservationControllerImpl implements ReservationController {
             log.info("ReservationController find by home before check in Reservation(id: {}) start", id);
             List<Reservation> reservations = new ArrayList<>();
             reservations.addAll(reservationService.findByHomeIdCheckInOut(id, false, false, false, false));
-            reservations.addAll(reservationService.findByHomeIdCheckInOut(id, false, false, true, false));
-            reservations.addAll(reservationService.findByHomeIdCheckInOut(id, false, false, false, true));
             return reservations;
         } catch (Exception e) {
             log.error("ReservationController find by home before check in Reservation failure, error: {}",
@@ -211,8 +209,6 @@ public class ReservationControllerImpl implements ReservationController {
             log.info("ReservationController find by user before check in Reservation(id: {}) start", id);
             List<Reservation> reservations = new ArrayList<>();
             reservations.addAll(reservationService.findByHomeIdCheckInOut(id, false, false, false, false));
-            reservations.addAll(reservationService.findByHomeIdCheckInOut(id, false, false, true, false));
-            reservations.addAll(reservationService.findByHomeIdCheckInOut(id, false, false, false, true));
             return reservations;
         } catch (Exception e) {
             log.error("ReservationController find by user before check in Reservation failure, error: {}",

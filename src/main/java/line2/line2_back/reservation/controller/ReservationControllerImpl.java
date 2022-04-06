@@ -295,7 +295,7 @@ public class ReservationControllerImpl implements ReservationController {
             log.error("ReservationController accept check in Reservation failure, error: {}", e.getMessage());
             return SystemMessage.builder()
                     .code(2)
-                    .message("체크인 실패")
+                    .message("예약 상태 변경 실패")
                     .build();
         } finally {
             log.info("ReservationController accept check in Reservation end");
@@ -314,7 +314,7 @@ public class ReservationControllerImpl implements ReservationController {
             log.error("ReservationController accept check out Reservation failure, error: {}", e.getMessage());
             return SystemMessage.builder()
                     .code(2)
-                    .message("체크아웃 실패")
+                    .message("예약 상태 변경 실패")
                     .build();
         } finally {
             log.info("ReservationController accept check out Reservation end");

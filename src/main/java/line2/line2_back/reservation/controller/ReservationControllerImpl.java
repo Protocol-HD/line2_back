@@ -160,7 +160,7 @@ public class ReservationControllerImpl implements ReservationController {
     }
 
     @Override
-    @GetMapping("/v1/reservation/hoome/after_check_out/{id}")
+    @GetMapping("/v1/reservation/home/after_check_out/{id}")
     public List<Reservation> findByHomeIdAfterCheckOut(@PathVariable Long id) {
         try {
             log.info("ReservationController find by home after check out Reservation(id: {}) start", id);

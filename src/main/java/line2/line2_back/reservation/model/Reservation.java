@@ -3,6 +3,7 @@ package line2.line2_back.reservation.model;
 import line2.line2_back.restApi.models.Home;
 import line2.line2_back.restApi.models.Room;
 import line2.line2_back.restApi.models.User;
+import line2.line2_back.util.BaseTime;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -16,7 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Reservation {
+public class Reservation extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

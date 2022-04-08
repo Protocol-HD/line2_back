@@ -27,4 +27,10 @@ public class Home {
     @JoinColumn(name = "user_id")
     private User user;
     private String homeZipCode;
+    @ManyToOne
+    @JoinColumn(name = "check_in_time")
+    private CheckTime checkInTime;
+    @ManyToOne
+    @JoinColumn(name = "check_out_time")
+    private CheckTime checkOutTime;
 }

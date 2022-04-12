@@ -51,4 +51,6 @@ public interface ReservationController {
     int headCount(ReservationHeadCountDto reservationHeadCountDto);
 
     SystemMessage isEnableDeleteRoom(Long id);
+
+    List<ReservationCalendar> getReservationCalendar(Long id);
 }

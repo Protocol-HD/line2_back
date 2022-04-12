@@ -381,4 +381,18 @@ public class ReservationControllerImpl implements ReservationController {
             log.info("ReservationController find exist next Reservation end");
         }
     }
+
+    @Override
+    @GetMapping("/v1/reservation/calendar/{id}")
+    public List<ReservationCalendar> getReservationCalendar(@PathVariable Long id) {
+        try {
+            log.info("ReservationController get getReservationCalendar(room id: {}) start", id);
+            return reservationService.getReservationCalendar(id);
+        } catch (Exception e) {
+            log.error("ReservationController get getReservationCalendar failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("ReservationControllerget getReservationCalendar end");
+        }
+    }
 }

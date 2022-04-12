@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -350,6 +352,74 @@ public class ReservationServiceImpl implements ReservationService {
                     .build();
         } finally {
             log.info("ReservationService find exist next Reservation end");
+        }
+    }
+
+    @Override
+    public List<ReservationCalendar> getReservationCalendar(Long id) {
+        try {
+            log.info("ReservationService get getReservationCalendar(room id: {}) start", id);
+            List<ReservationCalendar> reservationCalendars = new ArrayList<>();
+
+            Calendar cal = Calendar.getInstance();
+            Calendar now = Calendar.getInstance();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            cal.clear();
+            cal.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DATE));
+
+            int maxHeadCount = restApiService.getRoomById(id).getMaxHeadCount();
+            for (int i = 0; i < 62; i++) {
+                int headCount = reservationRepository.findByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqual(
+                        id, cal.getTime(), cal.getTime()).size();
+                String color;
+                switch ((int) ((double) headCount / (double) maxHeadCount * 10)) {
+                    case 1:
+                        color = "#86e57f";
+                        break;
+                    case 2:
+                        color = "#86e57f";
+                        break;
+                    case 3:
+                        color = "#47c83e";
+                        break;
+                    case 4:
+                        color = "#47c83e";
+                        break;
+                    case 5:
+                        color = "#2f9d27";
+                        break;
+                    case 6:
+                        color = "#2f9d27";
+                        break;
+                    case 7:
+                        color = "#e5d85c";
+                        break;
+                    case 8:
+                        color = "#ffbb00";
+                        break;
+                    case 9:
+                        color = "#ffbb00";
+                        break;
+                    case 10:
+                        color = "#f15f5f";
+                        break;
+                    default:
+                        color = "#86e57f";
+                        break;
+                }
+                reservationCalendars.add(ReservationCalendar.builder()
+                        .date(simpleDateFormat.format(cal.getTime()))
+                        .title(headCount + " / " + maxHeadCount)
+                        .color(color)
+                        .build());
+                cal.add(Calendar.DATE, 1);
+            }
+            return reservationCalendars;
+        } catch (Exception e) {
+            log.error("ReservationService get getReservationCalendar failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("ReservationService getReservationCalendar end");
         }
     }
 }

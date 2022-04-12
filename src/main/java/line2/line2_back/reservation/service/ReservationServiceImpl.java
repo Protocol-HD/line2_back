@@ -150,7 +150,8 @@ public class ReservationServiceImpl implements ReservationService {
                     .home(restApiService.getHomeById(reservation.getHomeId()))
                     .room(restApiService.getRoomById(reservation.getRoomId()))
                     .user(restApiService.getUserById(reservation.getUserId()))
-
+                    .checkIn(reservation.getCheckIn())
+                    .checkOut(reservation.getCheckOut())
                     .checkInMessage(reservation.getCheckInMessage())
                     .checkOutMessage(reservation.getCheckOutMessage())
                     .denyMessage(reservation.getDenyMessage())

@@ -54,7 +54,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/{id}")
-    public Reservation findById(@PathVariable Long id) {
+    public ReservationDtoOutput findById(@PathVariable Long id) {
         try {
             log.info("ReservationController find by id Reservation(id: {}) start", id);
             return reservationService.findById(id);
@@ -85,7 +85,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/user/{id}")
-    public List<Reservation> findByUserId(@PathVariable Long id) {
+    public List<ReservationDtoOutput> findByUserId(@PathVariable Long id) {
         try {
             log.info("ReservationController find by user id Reservation(id: {}) start", id);
             return reservationService.findByUserId(id);
@@ -99,7 +99,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/home/{id}")
-    public List<Reservation> findByHomeId(@PathVariable Long id) {
+    public List<ReservationDtoOutput> findByHomeId(@PathVariable Long id) {
         try {
             log.info("ReservationController find by home id Reservation(id: {}) start", id);
             return reservationService.findByHomeId(id);
@@ -113,7 +113,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/room/{id}")
-    public List<Reservation> findByRoomId(Long id) {
+    public List<ReservationDtoOutput> findByRoomId(Long id) {
         try {
             log.info("ReservationController find by room id Reservation(id: {}) start", id);
             return reservationService.findByRoomId(id);
@@ -127,10 +127,10 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/home/before_check_in/{id}")
-    public List<Reservation> findByHomeIdBeforeCheckIn(@PathVariable Long id) {
+    public List<ReservationDtoOutput> findByHomeIdBeforeCheckIn(@PathVariable Long id) {
         try {
             log.info("ReservationController find by home before check in Reservation(id: {}) start", id);
-            List<Reservation> reservations = new ArrayList<>();
+            List<ReservationDtoOutput> reservations = new ArrayList<>();
             reservations.addAll(reservationService.findByHomeIdCheckInOut(id, false, false, false, false));
             return reservations;
         } catch (Exception e) {
@@ -144,7 +144,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/home/before_check_out/{id}")
-    public List<Reservation> findByHomeIdBeforeCheckOut(@PathVariable Long id) {
+    public List<ReservationDtoOutput> findByHomeIdBeforeCheckOut(@PathVariable Long id) {
         try {
             log.info("ReservationController find by home before check out Reservation(id: {}) start", id);
             return reservationService.findByHomeIdCheckInOut(id, true, false, false, false);
@@ -159,7 +159,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/home/after_check_out/{id}")
-    public List<Reservation> findByHomeIdAfterCheckOut(@PathVariable Long id) {
+    public List<ReservationDtoOutput> findByHomeIdAfterCheckOut(@PathVariable Long id) {
         try {
             log.info("ReservationController find by home after check out Reservation(id: {}) start", id);
             return reservationService.findByHomeIdCheckInOut(id, true, true, false, false);
@@ -174,7 +174,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/home/deny/{id}")
-    public List<Reservation> findByHomeDenyReservation(@PathVariable Long id) {
+    public List<ReservationDtoOutput> findByHomeDenyReservation(@PathVariable Long id) {
         try {
             log.info("ReservationController find by home deny Reservation(id: {}) start", id);
             return reservationService.findByHomeIdCheckInOut(id, false, false, true, false);
@@ -189,7 +189,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/home/cancel/{id}")
-    public List<Reservation> findByHomeCancelReservation(@PathVariable Long id) {
+    public List<ReservationDtoOutput> findByHomeCancelReservation(@PathVariable Long id) {
         try {
             log.info("ReservationController find by home cancel Reservation(id: {}) start", id);
             return reservationService.findByHomeIdCheckInOut(id, false, false, true, false);
@@ -204,10 +204,10 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/user/before_check_in/{id}")
-    public List<Reservation> findByUserIdBeforeCheckIn(@PathVariable Long id) {
+    public List<ReservationDtoOutput> findByUserIdBeforeCheckIn(@PathVariable Long id) {
         try {
             log.info("ReservationController find by user before check in Reservation(id: {}) start", id);
-            List<Reservation> reservations = new ArrayList<>();
+            List<ReservationDtoOutput> reservations = new ArrayList<>();
             reservations.addAll(reservationService.findByHomeIdCheckInOut(id, false, false, false, false));
             return reservations;
         } catch (Exception e) {
@@ -221,7 +221,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/user/before_check_out/{id}")
-    public List<Reservation> findByUserIdBeforeCheckOut(@PathVariable Long id) {
+    public List<ReservationDtoOutput> findByUserIdBeforeCheckOut(@PathVariable Long id) {
         try {
             log.info("ReservationController find by user before check out Reservation(id: {}) start", id);
             return reservationService.findByUserIdCheckInOut(id, true, false, false, false);
@@ -236,7 +236,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/user/after_check_out/{id}")
-    public List<Reservation> findByUserIdAfterCheckOut(@PathVariable Long id) {
+    public List<ReservationDtoOutput> findByUserIdAfterCheckOut(@PathVariable Long id) {
         try {
             log.info("ReservationController find by user after check out Reservation(id: {}) start", id);
             return reservationService.findByUserIdCheckInOut(id, true, true, false, false);
@@ -251,7 +251,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/user/deny/{id}")
-    public List<Reservation> findByUserDenyReservation(@PathVariable Long id) {
+    public List<ReservationDtoOutput> findByUserDenyReservation(@PathVariable Long id) {
         try {
             log.info("ReservationController find by user deny Reservation(id: {}) start", id);
             return reservationService.findByUserIdCheckInOut(id, false, false, true, false);
@@ -266,7 +266,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     @GetMapping("/v1/reservation/user/cancel/{id}")
-    public List<Reservation> findByUserCancelReservation(@PathVariable Long id) {
+    public List<ReservationDtoOutput> findByUserCancelReservation(@PathVariable Long id) {
         try {
             log.info("ReservationController find by user cancel Reservation(id: {}) start", id);
             return reservationService.findByUserIdCheckInOut(id, false, false, false, true);

@@ -10,19 +10,19 @@ public interface ReservationService {
 
     SystemMessage edit(ReservationChangeDateDtoInput reservationChangeDateDtoInput);
 
-    Reservation findById(Long id);
+    ReservationDtoOutput findById(Long id);
 
     SystemMessage deleteById(Long id);
 
-    List<Reservation> findByUserId(Long id);
+    List<ReservationDtoOutput> findByUserId(Long id);
 
-    List<Reservation> findByHomeId(Long id);
+    List<ReservationDtoOutput> findByHomeId(Long id);
 
-    List<Reservation> findByRoomId(Long id);
+    List<ReservationDtoOutput> findByRoomId(Long id);
 
-    List<Reservation> findByHomeIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
+    List<ReservationDtoOutput> findByHomeIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
 
-    List<Reservation> findByUserIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
+    List<ReservationDtoOutput> findByUserIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
 
     SystemMessage changeReservationStatus(Long id, boolean checkInStatus, boolean checkOutStatus, String checkInMessage, String checkOutMessage);
 

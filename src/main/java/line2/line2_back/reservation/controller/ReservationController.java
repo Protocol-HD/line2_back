@@ -10,35 +10,35 @@ public interface ReservationController {
 
     SystemMessage edit(ReservationChangeDateDtoInput reservationChangeDateDtoInput);
 
-    Reservation findById(Long id);
+    ReservationDtoOutput findById(Long id);
 
     SystemMessage deleteById(Long id);
 
-    List<Reservation> findByUserId(Long id);
+    List<ReservationDtoOutput> findByUserId(Long id);
 
-    List<Reservation> findByHomeId(Long id);
+    List<ReservationDtoOutput> findByHomeId(Long id);
 
-    List<Reservation> findByRoomId(Long id);
+    List<ReservationDtoOutput> findByRoomId(Long id);
 
-    List<Reservation> findByHomeIdBeforeCheckIn(Long id);
+    List<ReservationDtoOutput> findByHomeIdBeforeCheckIn(Long id);
 
-    List<Reservation> findByHomeIdBeforeCheckOut(Long id);
+    List<ReservationDtoOutput> findByHomeIdBeforeCheckOut(Long id);
 
-    List<Reservation> findByHomeIdAfterCheckOut(Long id);
+    List<ReservationDtoOutput> findByHomeIdAfterCheckOut(Long id);
 
-    List<Reservation> findByHomeDenyReservation(Long id);
+    List<ReservationDtoOutput> findByHomeDenyReservation(Long id);
 
-    List<Reservation> findByHomeCancelReservation(Long id);
+    List<ReservationDtoOutput> findByHomeCancelReservation(Long id);
     
-    List<Reservation> findByUserIdBeforeCheckIn(Long id);
+    List<ReservationDtoOutput> findByUserIdBeforeCheckIn(Long id);
 
-    List<Reservation> findByUserIdBeforeCheckOut(Long id);
+    List<ReservationDtoOutput> findByUserIdBeforeCheckOut(Long id);
 
-    List<Reservation> findByUserIdAfterCheckOut(Long id);
+    List<ReservationDtoOutput> findByUserIdAfterCheckOut(Long id);
 
-    List<Reservation> findByUserDenyReservation(Long id);
+    List<ReservationDtoOutput> findByUserDenyReservation(Long id);
 
-    List<Reservation> findByUserCancelReservation(Long id);
+    List<ReservationDtoOutput> findByUserCancelReservation(Long id);
 
     SystemMessage acceptCheckIn(ReservationCheckInOutInput reservationCheckInOutInput);
 

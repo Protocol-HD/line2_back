@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
 @Getter
 @Setter
 @ToString
@@ -23,9 +22,7 @@ public class Home {
     @JoinColumn(name = "home_category_id")
     private HomeCategory homeCategory;
     private String homeInformation;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Long userId;
     private String homeZipCode;
     @ManyToOne
     @JoinColumn(name = "check_in_time")

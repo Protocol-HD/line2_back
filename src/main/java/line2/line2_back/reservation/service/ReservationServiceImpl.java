@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,9 +30,9 @@ public class ReservationServiceImpl implements ReservationService {
                     .size() < restApiService.getRoomById(reservationDto.getRoomId()).getMaxHeadCount()) {
                 reservationRepository.save(Reservation.builder()
                         .id(reservationDto.getReservationId())
-                        .home(restApiService.getHomeById(reservationDto.getHomeId()))
-                        .room(restApiService.getRoomById(reservationDto.getRoomId()))
-                        .user(restApiService.getUserById(reservationDto.getUserId()))
+                        .homeId(reservationDto.getHomeId())
+                        .roomId(reservationDto.getRoomId())
+                        .userId(reservationDto.getUserId())
                         .checkIn(reservationDto.getCheckIn())
                         .checkOut(reservationDto.getCheckOut())
                         .guestToHost(reservationDto.getGuestToHost())
@@ -63,7 +64,7 @@ public class ReservationServiceImpl implements ReservationService {
         try {
             log.info("ReservationService edit Reservation({}) start", reservationChangeDateDtoInput);
             Long roomId = reservationRepository.findById(reservationChangeDateDtoInput.getReservationId()).get()
-                    .getRoom().getId();
+                    .getRoomId();
             if (reservationRepository.findByRoomIdAndCheckOutGreaterThanAndCheckInLessThan(
                     roomId,
                     reservationChangeDateDtoInput.getCheckIn(),
@@ -96,10 +97,23 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation findById(Long id) {
+    public ReservationDtoOutput findById(Long id) {
         try {
             log.info("ReservationService find by id Reservation(id: {}) start", id);
-            return reservationRepository.findById(id).get();
+            Reservation reservation = reservationRepository.findById(id).get();
+            return ReservationDtoOutput.builder()
+                    .id(reservation.getId())
+                    .home(restApiService.getHomeById(reservation.getHomeId()))
+                    .room(restApiService.getRoomById(reservation.getRoomId()))
+                    .user(restApiService.getUserById(reservation.getUserId()))
+                    .checkIn(reservation.getCheckIn())
+                    .checkOut(reservation.getCheckOut())
+                    .checkInMessage(reservation.getCheckInMessage())
+                    .checkOutMessage(reservation.getCheckOutMessage())
+                    .denyMessage(reservation.getDenyMessage())
+                    .cancelMessage(reservation.getCancelMessage())
+                    .guestToHost(reservation.getGuestToHost())
+                    .build();
         } catch (Exception e) {
             log.error("ReservationService find by id Reservation failure, error: {}", e.getMessage());
             return null;
@@ -128,11 +142,30 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
+    public List<ReservationDtoOutput> makeReservationDtoOutPutList(List<Reservation> reservations) {
+        List<ReservationDtoOutput> reservationDtoOutputs = new ArrayList<>();
+        reservations.forEach(reservation -> {
+            reservationDtoOutputs.add(ReservationDtoOutput.builder()
+                    .id(reservation.getId())
+                    .home(restApiService.getHomeById(reservation.getHomeId()))
+                    .room(restApiService.getRoomById(reservation.getRoomId()))
+                    .user(restApiService.getUserById(reservation.getUserId()))
+
+                    .checkInMessage(reservation.getCheckInMessage())
+                    .checkOutMessage(reservation.getCheckOutMessage())
+                    .denyMessage(reservation.getDenyMessage())
+                    .cancelMessage(reservation.getCancelMessage())
+                    .guestToHost(reservation.getGuestToHost())
+                    .build());
+        });
+        return reservationDtoOutputs;
+    }
+
     @Override
-    public List<Reservation> findByUserId(Long id) {
+    public List<ReservationDtoOutput> findByUserId(Long id) {
         try {
             log.info("ReservationService find by user id Reservation(id: {}) start", id);
-            return reservationRepository.findByUserId(id);
+            return makeReservationDtoOutPutList(reservationRepository.findByUserId(id));
         } catch (Exception e) {
             log.error("ReservationService find by user id Reservation failure, error: {}", e.getMessage());
             return null;
@@ -142,10 +175,10 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findByHomeId(Long id) {
+    public List<ReservationDtoOutput> findByHomeId(Long id) {
         try {
             log.info("ReservationService find by home id Reservation(id: {}) start", id);
-            return reservationRepository.findByHomeId(id);
+            return makeReservationDtoOutPutList(reservationRepository.findByHomeId(id));
         } catch (Exception e) {
             log.error("ReservationService find by home id Reservation failure, error: {}", e.getMessage());
             return null;
@@ -155,10 +188,10 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findByRoomId(Long id) {
+    public List<ReservationDtoOutput> findByRoomId(Long id) {
         try {
             log.info("ReservationService find by room id Reservation(id: {}) start", id);
-            return reservationRepository.findByRoomId(id);
+            return makeReservationDtoOutPutList(reservationRepository.findByRoomId(id));
         } catch (Exception e) {
             log.error("ReservationService find by room id Reservation failure, error: {}", e.getMessage());
             return null;
@@ -168,12 +201,14 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findByHomeIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus,
+    public List<ReservationDtoOutput> findByHomeIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus,
             boolean denyStatus, boolean cancelStatus) {
         try {
             log.info("ReservationService find by home check in, out status Reservation(id: {}) start", id);
-            return reservationRepository.findByHomeIdAndCheckInStatusAndCheckOutStatusAndDenyStatusAndCancelStatus(id, checkInStatus,
-                    checkOutStatus, denyStatus, cancelStatus);
+            return makeReservationDtoOutPutList(
+                    reservationRepository.findByHomeIdAndCheckInStatusAndCheckOutStatusAndDenyStatusAndCancelStatus(id,
+                            checkInStatus,
+                            checkOutStatus, denyStatus, cancelStatus));
         } catch (Exception e) {
             log.error("ReservationService find by home check in, out status Reservation failure, error: {}",
                     e.getMessage());
@@ -184,12 +219,14 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findByUserIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus,
+    public List<ReservationDtoOutput> findByUserIdCheckInOut(Long id, boolean checkInStatus, boolean checkOutStatus,
             boolean denyStatus, boolean cancelStatus) {
         try {
             log.info("ReservationService find by user check in, out status Reservation(id: {}) start", id);
-            return reservationRepository.findByUserIdAndCheckInStatusAndCheckOutStatusAndDenyStatusAndCancelStatus(id, checkInStatus,
-                    checkOutStatus, denyStatus, cancelStatus);
+            return makeReservationDtoOutPutList(
+                    reservationRepository.findByUserIdAndCheckInStatusAndCheckOutStatusAndDenyStatusAndCancelStatus(id,
+                            checkInStatus,
+                            checkOutStatus, denyStatus, cancelStatus));
         } catch (Exception e) {
             log.error("ReservationService find by user check in, out status Reservation failure, error: {}",
                     e.getMessage());
@@ -200,7 +237,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public SystemMessage changeReservationStatus(Long id, boolean checkInStatus, boolean checkOutStatus, String checkInMessage, String checkOutMessage) {
+    public SystemMessage changeReservationStatus(Long id, boolean checkInStatus, boolean checkOutStatus,
+            String checkInMessage, String checkOutMessage) {
         try {
             log.info("ReservationService change reservation status Reservation(id: {}) start", id);
             Reservation reservation = reservationRepository.findById(id).get();
@@ -228,7 +266,8 @@ public class ReservationServiceImpl implements ReservationService {
     public SystemMessage denyReservation(ReservationCheckInOutInput reservationCheckInOutInput) {
         try {
             log.info("ReservationService deny Reservation({}) start", reservationCheckInOutInput);
-            Reservation reservation = reservationRepository.findById(reservationCheckInOutInput.getReservationId()).get();
+            Reservation reservation = reservationRepository.findById(reservationCheckInOutInput.getReservationId())
+                    .get();
             reservation.setDenyMessage(reservationCheckInOutInput.getMessage());
             reservation.setDenyStatus(true);
             reservationRepository.save(reservation);
@@ -251,7 +290,8 @@ public class ReservationServiceImpl implements ReservationService {
     public SystemMessage cancelReservation(ReservationCheckInOutInput reservationCheckInOutInput) {
         try {
             log.info("ReservationService cancel Reservation({}) start", reservationCheckInOutInput);
-            Reservation reservation = reservationRepository.findById(reservationCheckInOutInput.getReservationId()).get();
+            Reservation reservation = reservationRepository.findById(reservationCheckInOutInput.getReservationId())
+                    .get();
             reservation.setCancelMessage(reservationCheckInOutInput.getMessage());
             reservation.setCancelStatus(true);
             reservationRepository.save(reservation);

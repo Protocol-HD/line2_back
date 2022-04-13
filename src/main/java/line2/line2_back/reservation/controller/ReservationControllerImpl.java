@@ -208,7 +208,7 @@ public class ReservationControllerImpl implements ReservationController {
         try {
             log.info("ReservationController find by user before check in Reservation(id: {}) start", id);
             List<ReservationDtoOutput> reservations = new ArrayList<>();
-            reservations.addAll(reservationService.findByHomeIdCheckInOut(id, false, false, false, false));
+            reservations.addAll(reservationService.findByUserIdCheckInOut(id, false, false, false, false));
             return reservations;
         } catch (Exception e) {
             log.error("ReservationController find by user before check in Reservation failure, error: {}",

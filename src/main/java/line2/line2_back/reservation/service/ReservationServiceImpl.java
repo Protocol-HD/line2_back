@@ -25,31 +25,38 @@ public class ReservationServiceImpl implements ReservationService {
     public SystemMessage add(ReservationDto reservationDto) {
         try {
             log.info("ReservationService add Reservation({}) start", reservationDto);
-            if (reservationRepository.findByRoomIdAndCheckOutGreaterThanAndCheckInLessThan(
-                    reservationDto.getRoomId(),
-                    reservationDto.getCheckIn(),
-                    reservationDto.getCheckOut())
-                    .size() < restApiService.getRoomById(reservationDto.getRoomId()).getMaxHeadCount()) {
-                reservationRepository.save(Reservation.builder()
-                        .id(reservationDto.getReservationId())
-                        .homeId(reservationDto.getHomeId())
-                        .roomId(reservationDto.getRoomId())
-                        .userId(reservationDto.getUserId())
-                        .checkIn(reservationDto.getCheckIn())
-                        .checkOut(reservationDto.getCheckOut())
-                        .guestToHost(reservationDto.getGuestToHost())
-                        .build());
+            if (reservationRepository.findByUserIdAndCheckOutGreaterThanAndCheckInLessThan(reservationDto.getUserId(),
+                    reservationDto.getCheckIn(), reservationDto.getCheckOut()).size() > 0) {
                 return SystemMessage.builder()
-                        .code(1)
-                        .message("예약 성공")
+                        .code(4)
+                        .message("예약 실패: 다른 예약 존재")
                         .build();
             } else {
-                return SystemMessage.builder()
-                        .code(3)
-                        .message("예약 실패: 인원 초과")
-                        .build();
+                if (reservationRepository.findByRoomIdAndCheckOutGreaterThanAndCheckInLessThan(
+                        reservationDto.getRoomId(),
+                        reservationDto.getCheckIn(),
+                        reservationDto.getCheckOut())
+                        .size() < restApiService.getRoomById(reservationDto.getRoomId()).getMaxHeadCount()) {
+                    reservationRepository.save(Reservation.builder()
+                            .id(reservationDto.getReservationId())
+                            .homeId(reservationDto.getHomeId())
+                            .roomId(reservationDto.getRoomId())
+                            .userId(reservationDto.getUserId())
+                            .checkIn(reservationDto.getCheckIn())
+                            .checkOut(reservationDto.getCheckOut())
+                            .guestToHost(reservationDto.getGuestToHost())
+                            .build());
+                    return SystemMessage.builder()
+                            .code(1)
+                            .message("예약 성공")
+                            .build();
+                } else {
+                    return SystemMessage.builder()
+                            .code(3)
+                            .message("예약 실패: 인원 초과")
+                            .build();
+                }
             }
-
         } catch (Exception e) {
             log.error("ReservationService add Reservation failure, error: {}", e.getMessage());
             return SystemMessage.builder()
@@ -65,27 +72,34 @@ public class ReservationServiceImpl implements ReservationService {
     public SystemMessage edit(ReservationChangeDateDtoInput reservationChangeDateDtoInput) {
         try {
             log.info("ReservationService edit Reservation({}) start", reservationChangeDateDtoInput);
-            Long roomId = reservationRepository.findById(reservationChangeDateDtoInput.getReservationId()).get()
-                    .getRoomId();
-            if (reservationRepository.findByRoomIdAndCheckOutGreaterThanAndCheckInLessThan(
-                    roomId,
-                    reservationChangeDateDtoInput.getCheckIn(),
-                    reservationChangeDateDtoInput.getCheckOut())
-                    .size() < restApiService.getRoomById(roomId).getMaxHeadCount()) {
-                Reservation reservation = reservationRepository
-                        .findById(reservationChangeDateDtoInput.getReservationId()).get();
-                reservation.setCheckIn(reservationChangeDateDtoInput.getCheckIn());
-                reservation.setCheckOut(reservationChangeDateDtoInput.getCheckOut());
-                reservationRepository.save(reservation);
+            Reservation reservation = reservationRepository.findById(reservationChangeDateDtoInput.getReservationId())
+                    .get();
+            if (reservationRepository.findByUserIdAndCheckOutGreaterThanAndCheckInLessThan(reservation.getUserId(),
+                    reservationChangeDateDtoInput.getCheckIn(), reservationChangeDateDtoInput.getCheckOut())
+                    .size() > 0) {
                 return SystemMessage.builder()
-                        .code(1)
-                        .message("예약 변경 성공")
+                        .code(4)
+                        .message("예약 변경 실패: 다른 예약 존재")
                         .build();
             } else {
-                return SystemMessage.builder()
-                        .code(3)
-                        .message("예약 변경 실패: 인원 초과")
-                        .build();
+                if (reservationRepository.findByRoomIdAndCheckOutGreaterThanAndCheckInLessThan(
+                        reservation.getId(),
+                        reservationChangeDateDtoInput.getCheckIn(),
+                        reservationChangeDateDtoInput.getCheckOut())
+                        .size() < restApiService.getRoomById(reservation.getId()).getMaxHeadCount()) {
+                    reservation.setCheckIn(reservationChangeDateDtoInput.getCheckIn());
+                    reservation.setCheckOut(reservationChangeDateDtoInput.getCheckOut());
+                    reservationRepository.save(reservation);
+                    return SystemMessage.builder()
+                            .code(1)
+                            .message("예약 변경 성공")
+                            .build();
+                } else {
+                    return SystemMessage.builder()
+                            .code(3)
+                            .message("예약 변경 실패: 인원 초과")
+                            .build();
+                }
             }
         } catch (Exception e) {
             log.error("ReservationService edit Reservation failure, error: {}", e.getMessage());
@@ -366,6 +380,8 @@ public class ReservationServiceImpl implements ReservationService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             cal.clear();
             cal.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DATE));
+            // cal.add(Calendar.HOUR, -9);
+
 
             int maxHeadCount = restApiService.getRoomById(id).getMaxHeadCount();
             for (int i = 0; i < 62; i++) {

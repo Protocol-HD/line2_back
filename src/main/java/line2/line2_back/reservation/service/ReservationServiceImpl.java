@@ -409,7 +409,7 @@ public class ReservationServiceImpl implements ReservationService {
                 }
                 reservationCalendars.add(ReservationCalendar.builder()
                         .date(simpleDateFormat.format(cal.getTime()))
-                        .title(headCount + " / " + maxHeadCount)
+                        .title(maxHeadCount - headCount + " / " + maxHeadCount)
                         .color(color)
                         .build());
                 cal.add(Calendar.DATE, 1);

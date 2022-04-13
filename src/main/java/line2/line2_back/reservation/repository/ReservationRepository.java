@@ -17,11 +17,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findByHomeIdAndCheckInStatusAndCheckOutStatusAndDenyStatusAndCancelStatus(Long id, boolean checkInStatus, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
 
-    List<Reservation> findByRoomIdAndCheckOutGreaterThanAndCheckInLessThan(Long id, Date checkIn, Date checkOut);
+    List<Reservation> findByRoomIdAndCheckOutGreaterThanAndCheckInLessThanAndCheckOutStatusAndDenyStatusAndCancelStatus(Long id, Date checkIn, Date checkOut, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
 
-    List<Reservation> findByUserIdAndCheckOutGreaterThanAndCheckInLessThan(Long id, Date checkIn, Date checkOut);
+    List<Reservation> findByUserIdAndCheckOutGreaterThanAndCheckInLessThanAndCheckOutStatusAndDenyStatusAndCancelStatus(Long id, Date checkIn, Date checkOut, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
 
-    List<Reservation> findByRoomIdAndCheckOutGreaterThanAndCheckInGreaterThan(Long id, Date checkIn, Date checkOut);
+    List<Reservation> findByRoomIdAndCheckOutGreaterThanAndCheckInGreaterThanAndCheckOutStatusAndDenyStatusAndCancelStatus(Long id, Date checkIn, Date checkOut, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
 
-    List<Reservation> findByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqual(Long id, Date calendar, Date calendar2);
+    List<Reservation> findByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqualAndCheckOutStatusAndDenyStatusAndCancelStatus(Long id, Date calendar, Date calendar2, boolean checkOutStatus, boolean denyStatus, boolean cancelStatus);
 }

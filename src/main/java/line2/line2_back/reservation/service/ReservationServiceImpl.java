@@ -25,17 +25,21 @@ public class ReservationServiceImpl implements ReservationService {
     public SystemMessage add(ReservationDto reservationDto) {
         try {
             log.info("ReservationService add Reservation({}) start", reservationDto);
-            if (reservationRepository.findByUserIdAndCheckOutGreaterThanAndCheckInLessThan(reservationDto.getUserId(),
-                    reservationDto.getCheckIn(), reservationDto.getCheckOut()).size() > 0) {
+            if (reservationRepository
+                    .findByUserIdAndCheckOutGreaterThanAndCheckInLessThanAndCheckOutStatusAndDenyStatusAndCancelStatus(
+                            reservationDto.getUserId(),
+                            reservationDto.getCheckIn(), reservationDto.getCheckOut(), false, false, false)
+                    .size() > 0) {
                 return SystemMessage.builder()
                         .code(4)
                         .message("예약 실패: 다른 예약 존재")
                         .build();
             } else {
-                if (reservationRepository.findByRoomIdAndCheckOutGreaterThanAndCheckInLessThan(
-                        reservationDto.getRoomId(),
-                        reservationDto.getCheckIn(),
-                        reservationDto.getCheckOut())
+                if (reservationRepository
+                        .findByRoomIdAndCheckOutGreaterThanAndCheckInLessThanAndCheckOutStatusAndDenyStatusAndCancelStatus(
+                                reservationDto.getRoomId(),
+                                reservationDto.getCheckIn(),
+                                reservationDto.getCheckOut(), false, false, false)
                         .size() < restApiService.getRoomById(reservationDto.getRoomId()).getMaxHeadCount()) {
                     reservationRepository.save(Reservation.builder()
                             .id(reservationDto.getReservationId())
@@ -74,18 +78,22 @@ public class ReservationServiceImpl implements ReservationService {
             log.info("ReservationService edit Reservation({}) start", reservationChangeDateDtoInput);
             Reservation reservation = reservationRepository.findById(reservationChangeDateDtoInput.getReservationId())
                     .get();
-            if (reservationRepository.findByUserIdAndCheckOutGreaterThanAndCheckInLessThan(reservation.getUserId(),
-                    reservationChangeDateDtoInput.getCheckIn(), reservationChangeDateDtoInput.getCheckOut())
+            if (reservationRepository
+                    .findByUserIdAndCheckOutGreaterThanAndCheckInLessThanAndCheckOutStatusAndDenyStatusAndCancelStatus(
+                            reservation.getUserId(),
+                            reservationChangeDateDtoInput.getCheckIn(), reservationChangeDateDtoInput.getCheckOut(),
+                            false, false, false)
                     .size() > 0) {
                 return SystemMessage.builder()
                         .code(4)
                         .message("예약 변경 실패: 다른 예약 존재")
                         .build();
             } else {
-                if (reservationRepository.findByRoomIdAndCheckOutGreaterThanAndCheckInLessThan(
-                        reservation.getId(),
-                        reservationChangeDateDtoInput.getCheckIn(),
-                        reservationChangeDateDtoInput.getCheckOut())
+                if (reservationRepository
+                        .findByRoomIdAndCheckOutGreaterThanAndCheckInLessThanAndCheckOutStatusAndDenyStatusAndCancelStatus(
+                                reservation.getId(),
+                                reservationChangeDateDtoInput.getCheckIn(),
+                                reservationChangeDateDtoInput.getCheckOut(), false, false, false)
                         .size() < restApiService.getRoomById(reservation.getId()).getMaxHeadCount()) {
                     reservation.setCheckIn(reservationChangeDateDtoInput.getCheckIn());
                     reservation.setCheckOut(reservationChangeDateDtoInput.getCheckOut());
@@ -332,8 +340,10 @@ public class ReservationServiceImpl implements ReservationService {
         try {
             log.info("ReservationService head count Reservation({}) start", reservationHeadCountDto);
             return reservationRepository
-                    .findByRoomIdAndCheckOutGreaterThanAndCheckInLessThan(reservationHeadCountDto.getRoomId(),
-                            reservationHeadCountDto.getCheckIn(), reservationHeadCountDto.getCheckOut())
+                    .findByRoomIdAndCheckOutGreaterThanAndCheckInLessThanAndCheckOutStatusAndDenyStatusAndCancelStatus(
+                            reservationHeadCountDto.getRoomId(),
+                            reservationHeadCountDto.getCheckIn(), reservationHeadCountDto.getCheckOut(), false, false,
+                            false)
                     .size();
         } catch (Exception e) {
             log.error("ReservationService head count Reservation failure, error: {}", e.getMessage());
@@ -348,7 +358,9 @@ public class ReservationServiceImpl implements ReservationService {
         try {
             log.info("ReservationService find exist next Reservation(id: {}) start", id);
             if (reservationRepository
-                    .findByRoomIdAndCheckOutGreaterThanAndCheckInGreaterThan(id, new Date(), new Date()).size() == 0) {
+                    .findByRoomIdAndCheckOutGreaterThanAndCheckInGreaterThanAndCheckOutStatusAndDenyStatusAndCancelStatus(
+                            id, new Date(), new Date(), false, false, false)
+                    .size() == 0) {
                 return SystemMessage.builder()
                         .code(1)
                         .message("객실 삭제 가능")
@@ -382,11 +394,12 @@ public class ReservationServiceImpl implements ReservationService {
             cal.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DATE));
             // cal.add(Calendar.HOUR, -9);
 
-
             int maxHeadCount = restApiService.getRoomById(id).getMaxHeadCount();
             for (int i = 0; i < 62; i++) {
-                int headCount = reservationRepository.findByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqual(
-                        id, cal.getTime(), cal.getTime()).size();
+                int headCount = reservationRepository
+                        .findByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqualAndCheckOutStatusAndDenyStatusAndCancelStatus(
+                                id, cal.getTime(), cal.getTime(), false, false, false)
+                        .size();
                 String color;
                 switch ((int) ((double) headCount / (double) maxHeadCount * 10)) {
                     case 1:

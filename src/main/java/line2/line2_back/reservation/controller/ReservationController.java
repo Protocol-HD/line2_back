@@ -3,7 +3,6 @@ package line2.line2_back.reservation.controller;
 import line2.line2_back.reservation.model.*;
 import line2.line2_back.systemMessage.SystemMessage;
 
-import java.util.Date;
 import java.util.List;
 
 public interface ReservationController {
@@ -54,4 +53,6 @@ public interface ReservationController {
     SystemMessage isEnableDeleteRoom(Long id);
 
     List<ReservationCalendar> getReservationCalendar(Long id);
+
+    List<ReservationRoomCalendar> getReservationCalendars(Long id);
 }

@@ -1,6 +1,10 @@
 package line2.line2_back.restApi;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -40,6 +44,15 @@ public class RestApiService {
     public Room getRoomById(Long id) {
         String url = homeServer + "/home/v1/room/" + Long.toString(id);
         ResponseEntity<Room> response = restTemplate.getForEntity(url, Room.class);
+        log.info("{}", response);
+        return response.getBody();
+    }
+
+    public List<Room> getRoomsByUserId(Long id) {
+        String url = homeServer + "/home/v1/home/calendar/" + Long.toString(id);
+        ResponseEntity<List<Room>> response = restTemplate.exchange(url, HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<Room>>() {
+                });
         log.info("{}", response);
         return response.getBody();
     }

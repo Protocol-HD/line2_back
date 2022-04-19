@@ -382,7 +382,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<ReservationCalendar> getReservationCalendar(Long id) {
+    public List<ReservationCalendar> getReservationCalendar(Long id, int before, int day) {
         try {
             log.info("ReservationService get getReservationCalendar(room id: {}) start", id);
             List<ReservationCalendar> reservationCalendars = new ArrayList<>();
@@ -392,10 +392,10 @@ public class ReservationServiceImpl implements ReservationService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             cal.clear();
             cal.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DATE));
-            // cal.add(Calendar.HOUR, -9);
+            cal.add(Calendar.MONTH, -before);
 
             int maxHeadCount = restApiService.getRoomById(id).getMaxHeadCount();
-            for (int i = 0; i < 62; i++) {
+            for (int i = 0; i < day; i++) {
                 int headCount = reservationRepository
                         .findByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqualAndCheckOutStatusAndDenyStatusAndCancelStatus(
                                 id, cal.getTime(), cal.getTime(), false, false, false)
@@ -403,10 +403,10 @@ public class ReservationServiceImpl implements ReservationService {
                 String color;
                 switch ((int) ((double) headCount / (double) maxHeadCount * 10)) {
                     case 1:
-                        color = "#86e57f";
+                        color = "#2f9d27";
                         break;
                     case 2:
-                        color = "#86e57f";
+                        color = "#2f9d27";
                         break;
                     case 3:
                         color = "#47c83e";
@@ -415,10 +415,10 @@ public class ReservationServiceImpl implements ReservationService {
                         color = "#47c83e";
                         break;
                     case 5:
-                        color = "#2f9d27";
+                        color = "#86e57f";
                         break;
                     case 6:
-                        color = "#2f9d27";
+                        color = "#86e57f";
                         break;
                     case 7:
                         color = "#e5d85c";
@@ -433,12 +433,12 @@ public class ReservationServiceImpl implements ReservationService {
                         color = "#f15f5f";
                         break;
                     default:
-                        color = "#86e57f";
+                        color = "#2f9d27";
                         break;
                 }
                 reservationCalendars.add(ReservationCalendar.builder()
                         .date(simpleDateFormat.format(cal.getTime()))
-                        .title(maxHeadCount - headCount + " / " + maxHeadCount)
+                        .title(maxHeadCount - headCount + " / " + maxHeadCount + " " +  "남음")
                         .color(color)
                         .build());
                 cal.add(Calendar.DATE, 1);
@@ -449,6 +449,26 @@ public class ReservationServiceImpl implements ReservationService {
             return null;
         } finally {
             log.info("ReservationService getReservationCalendar end");
+        }
+    }
+
+    @Override
+    public List<ReservationRoomCalendar> getReservationCalendars(Long id) {
+        try {
+            log.info("ReservationService get getReservationCalendars(user id: {}) start", id);
+            List<ReservationRoomCalendar> reservationRoomCalendars = new ArrayList<>();
+            restApiService.getRoomsByUserId(id).forEach(room -> {
+                reservationRoomCalendars.add(ReservationRoomCalendar.builder()
+                .roomName(room.getRoomName())
+                .calendar(getReservationCalendar(room.getId(), 1, 93))
+                .build());
+            });
+            return reservationRoomCalendars;
+        } catch (Exception e) {
+            log.error("ReservationService get getReservationCalendars failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("ReservationService get getReservationCalendars end");
         }
     }
 }

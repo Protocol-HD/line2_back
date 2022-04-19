@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -388,12 +387,26 @@ public class ReservationControllerImpl implements ReservationController {
     public List<ReservationCalendar> getReservationCalendar(@PathVariable Long id) {
         try {
             log.info("ReservationController get getReservationCalendar(room id: {}) start", id);
-            return reservationService.getReservationCalendar(id);
+            return reservationService.getReservationCalendar(id, 0, 62);
         } catch (Exception e) {
             log.error("ReservationController get getReservationCalendar failure, error: {}", e.getMessage());
             return null;
         } finally {
-            log.info("ReservationControllerget getReservationCalendar end");
+            log.info("ReservationController get getReservationCalendar end");
+        }
+    }
+
+    @Override
+    @GetMapping("/v1/reservation/calendars/{id}")
+    public List<ReservationRoomCalendar> getReservationCalendars(@PathVariable Long id) {
+        try {
+            log.info("ReservationController get getReservationCalendars(user id: {}) start", id);
+            return reservationService.getReservationCalendars(id);
+        } catch (Exception e) {
+            log.error("ReservationController get getReservationCalendars failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("ReservationController get getReservationCalendars end");
         }
     }
 }

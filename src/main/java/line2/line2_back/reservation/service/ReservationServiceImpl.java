@@ -405,37 +405,37 @@ public class ReservationServiceImpl implements ReservationService {
                 String color;
                 switch ((int) ((double) headCount / (double) maxHeadCount * 10)) {
                     case 1:
-                        color = "#2f9d27";
+                        color = "#00c853";
                         break;
                     case 2:
-                        color = "#2f9d27";
+                        color = "#00e676";
                         break;
                     case 3:
-                        color = "#47c83e";
+                        color = "#69f0ae";
                         break;
                     case 4:
-                        color = "#47c83e";
+                        color = "#b9f6ca";
                         break;
                     case 5:
-                        color = "#86e57f";
+                        color = "#ffe57f";
                         break;
                     case 6:
-                        color = "#86e57f";
+                        color = "#ffd740";
                         break;
                     case 7:
-                        color = "#e5d85c";
+                        color = "#ffc400";
                         break;
                     case 8:
-                        color = "#ffbb00";
+                        color = "#ff3d00";
                         break;
                     case 9:
-                        color = "#ffbb00";
+                        color = "#ff6e40";
                         break;
                     case 10:
-                        color = "#f15f5f";
+                        color = "#dd2c00";
                         break;
                     default:
-                        color = "#2f9d27";
+                        color = "#00c853";
                         break;
                 }
                 reservationCalendars.add(ReservationCalendar.builder()

@@ -56,4 +56,11 @@ public class RestApiService {
         log.info("{}", response);
         return response.getBody();
     }
+
+    public String getHomeImageById(Long id) {
+        String url = homeServer + "/home/v1/home_image_table/home/one/" + Long.toString(id);
+        String image = restTemplate.getForObject(url, String.class);
+        log.info("{}", image);
+        return image;
+    }
 }

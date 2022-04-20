@@ -137,6 +137,7 @@ public class ReservationServiceImpl implements ReservationService {
                     .denyMessage(reservation.getDenyMessage())
                     .cancelMessage(reservation.getCancelMessage())
                     .guestToHost(reservation.getGuestToHost())
+                    .homeImage(restApiService.getHomeImageById(reservation.getHomeId()))
                     .build();
         } catch (Exception e) {
             log.error("ReservationService find by id Reservation failure, error: {}", e.getMessage());
@@ -181,6 +182,7 @@ public class ReservationServiceImpl implements ReservationService {
                     .denyMessage(reservation.getDenyMessage())
                     .cancelMessage(reservation.getCancelMessage())
                     .guestToHost(reservation.getGuestToHost())
+                    .homeImage(restApiService.getHomeImageById(reservation.getHomeId()))
                     .build());
         });
         return reservationDtoOutputs;

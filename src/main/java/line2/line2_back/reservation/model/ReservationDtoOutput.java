@@ -28,4 +28,5 @@ public class ReservationDtoOutput {
     private String denyMessage;
     private String cancelMessage;
     private String guestToHost;
+    private String homeImage;
 }
